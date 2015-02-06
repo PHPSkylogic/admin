@@ -1,4 +1,8 @@
 <?php
+<<<<<<< HEAD
+=======
+    //echo phpversion();
+>>>>>>> admin3
 	if(version_compare(phpversion(), '5.3.0', '<') == true){die('PHP 5.3 Only');}
 	date_default_timezone_set('Europe/Kiev');
 	
