@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bfe96a6f-cd3f-4e91-a133-78d542647175" name="Default" comment="" />
+    <list default="true" id="bfe96a6f-cd3f-4e91-a133-78d542647175" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+    </list>
     <ignored path="www.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,7 +28,7 @@
       <file leaf-file-name="index.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="2" selection-start="652" selection-end="652" vertical-scroll-proportion="0.30289534" vertical-offset="0" max-vertical-offset="898">
+            <state line="2" column="0" selection-start="31" selection-end="31" vertical-scroll-proportion="0.035634745" vertical-offset="0" max-vertical-offset="898">
               <folding />
             </state>
           </provider>
@@ -155,7 +157,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="2" selection-start="652" selection-end="652" vertical-scroll-proportion="0.30289534" vertical-offset="0" max-vertical-offset="898">
+        <state line="2" column="0" selection-start="31" selection-end="31" vertical-scroll-proportion="0.035634745" vertical-offset="0" max-vertical-offset="898">
           <folding />
         </state>
       </provider>
