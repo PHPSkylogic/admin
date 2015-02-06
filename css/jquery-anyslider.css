@@ -1,0 +1,115 @@
+/* Bare minimum styles */
+.slider {
+	-ms-touch-action: none; /* Prevent default touch actions on Windows 8 */
+	overflow: auto; /* Not required but recommended for accessibility when JavaScript is turned off */
+	position: relative;
+	color:#2a2f32;
+	font-size:15px;
+	
+	width:1230px;
+	height:300px;
+	background-image:url(/tpl/default/images/shadow_slider.png);
+	background-position:bottom;
+	background-repeat:no-repeat;
+	padding-bottom:25px;
+
+}
+#slider a{
+	color:#ab4eb6;	
+}
+.slider img{
+	
+}
+
+/* The arrows can of course also be styled to your liking. This is just example styles */
+.as-prev-arrow, .as-next-arrow {
+	background: url(/images/arrows.png) no-repeat;
+	cursor: pointer;
+	filter: alpha(opacity=0);
+	height: 125px;
+
+
+	position: absolute;
+	text-indent: 100%;
+	top: 20px;
+	white-space: nowrap;
+	width: 23px;
+	z-index: 1;
+}
+
+.as-prev-arrow {
+	left: 0;
+}
+
+.as-next-arrow {
+	background-position: -88px 0;
+	right: 0;
+}
+
+.slider:hover .as-arrows a {
+	filter: alpha(opacity=1);
+	opacity: 1;
+	
+}
+.as-prev-arrow:hover{
+	background-position: -25px 0;
+}
+.as-next-arrow:hover{
+	background-position: -64px 0;
+}
+/* The same rules for styling apply here. Style to your liking */
+.as-nav {
+	text-align: center;
+	z-index: 1;
+	display:table;
+	padding:6px 10px;
+	margin:-58px auto 0;
+	position:relative;
+	display:none;
+}
+
+.as-nav a {
+	background: url(/images/bullets.png) no-repeat;
+	height: 21px;
+	display: inline-block;
+	margin: 0 2px;
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+	width:20px;
+}
+
+a.as-active, .as-nav a:hover {
+	background-position: -21px 0;
+}
+.slider-wrapper {
+	width:1230px;
+	height:300px;
+	position: relative;
+	margin-bottom: 60px;
+}
+.title_slider{
+	position:absolute;
+	height:250px;
+	width:555px;
+	background-image:url(/images/square.png);
+	color:#fff;
+	font-size:14px;
+	padding:25px 30px;
+	line-height:20px;
+}
+.arrow_slider{
+	position:absolute;
+	bottom:20px;
+	right:30px;	
+}
+.arrow_slider:hover{
+	opacity:0.7;	
+}
+.title_slider h3{
+	color:#fff;
+	font-size:27px;
+	font-family: 'Exo 2',sans-serif;
+	margin:0 0 20px 0;
+	font-weight:100;
+}
