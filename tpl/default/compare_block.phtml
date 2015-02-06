@@ -1,0 +1,25 @@
+
+<?php
+    if(isset($vars['compare']))
+    {
+		$i=0;
+		$cnt=count($vars['compare'])-1;
+		echo'<div id="compare_block">';
+		echo '<div class="title">Список сравнения</div>';
+		foreach($vars['compare'] as $row)
+		{
+			$style='';
+			if($cnt==$i)
+			{
+				$style=' style="border:none;"';
+			}
+			echo'<div class="compare_block"'.$style.'>';
+				echo'<img src="'.IMAGES.'del.jpg" alt="" class="del_compare" id="compare'.$row['id'].'" title="Удалить" />
+					 <a href="'.LINK.'/product/'.$row['url'].'" class="compare_title">'.$row['name'].'</a>';
+			echo"</div>";
+			$i++;	
+		}
+		echo '<a href="'.LINK.'/compare/all" class="all_compare">сравнить</a>';
+		echo'</div>';
+    }
+?>

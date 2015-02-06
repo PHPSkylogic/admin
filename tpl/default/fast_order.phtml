@@ -1,0 +1,27 @@
+<div id="fast_order_block" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:353px; left:56%;">
+<form action="<?=STRING::getUrl2('fastorder');?>" method="post" id="fast_order_form" onsubmit="return send_fast_order();">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel"><?=$vars['translate']['fast_order']?></h3>
+  </div>
+  <div class="modal-body">
+  	<div class="form_feedback" style="background-color:transparent; padding:0 25px;">
+        	<div id="fast_order_message"></div>
+            <label for="f3_name"><?=$vars['translate']['fio']?> *: </label>
+            <input type="text" name="f3_name" id="f3_name" class="validate[required]" /><br />
+
+            <label for="f3_phone"><?=$vars['translate']['phone']?> *: </label>
+            <input type="text" name="f3_phone" id="f3_phone" /><br />
+			
+            <input type="hidden" id="product_id2" value="<?=$vars['product']['id']?>" />
+            <table><tr>
+            <td style="padding-right:10px;"><img src="/captcha" alt="#Enable images to see captcha." /></td>
+            <td><input type="text" name="f3_captcha" id="f3_captcha" class="validate[required]" style="width:115px;" /></td>
+            <tr></table>
+	 </div>
+  </div>
+  <div class="modal-footer">
+    <input type="submit" value="<?=$vars['translate']['send_message']?>" class="submit" />
+  </div>
+</form>
+</div>

@@ -1,0 +1,16 @@
+<div class="tb_h">
+<div class="left_col">
+    <?
+        echo $vars['left_menu'];
+		if(isset($vars['filters']))echo $vars['filters'];
+		if(isset($vars['sales']))echo $vars['sales'];
+	?>
+</div>
+<div class="right_col">
+    <?php
+        if(isset($vars['message']))echo $vars['message'];
+        echo $vars['content'];
+    ?>
+</div>
+</div>
+<div class="clear"></div>  

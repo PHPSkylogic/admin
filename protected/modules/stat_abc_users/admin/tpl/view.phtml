@@ -1,0 +1,114 @@
+<?
+    if(isset($vars['message']))echo $vars['message'];
+?>
+<div class="statistics-body clear" style="padding:10px; position: relative;">
+    <form method="post">
+        <table><tr>
+        <td valign="top">
+            <h3>Период анализа</h3>
+            <label class="cm-required" for="page">От:</label>
+            <input type="text" class="input-text cm-calendar hasDatepicker" value="<?=$vars['date_start']?>" name="start<?=$vars['compare']?>" id="start<?=$vars['compare']?>" />
+            &nbsp;&nbsp;
+            <label class="cm-required" for="page">До:</label>
+            <input type="text" class="input-text cm-calendar hasDatepicker" value="<?=$vars['date_end']?>" size="55" name="end<?=$vars['compare']?>" id="end<?=$vars['compare']?>" />
+        </td>
+        <td valign="top" style="padding: 0 50px;">
+            <h3>Тип расчета</h3>
+            <input type="radio" name="order" value="DESC" id="order_desc" style="float: left; margin:3px 5px 0 0;" <? if($_SESSION['orderStatAbc']=='DESC')echo'checked'?>  />
+            <label for="order_desc">анализ наиболее продаваемых</label>
+            <div class="clear"></div>
+
+            <div style="margin-top: 5px;">
+            <input type="radio" name="order" value="ASC" id="order_asc" style="float: left; margin:3px 5px 0 0;" <? if($_SESSION['orderStatAbc']=='ASC')echo'checked'?>  />
+            <label for="order_asc">анализ наименее продаваемых</label>
+                </div>
+        </td>
+        <td valign="top">
+            <h3>Группы по %</h3>
+            <div>A - <input type="text" class="input-text" name="paretoA" value="<?=$_SESSION['paretoA']?>" style="width: 30px;" /> %</div>
+            <div>B - <input type="text" class="input-text" name="paretoB" value="<?=$_SESSION['paretoB']?>" style="width: 30px; margin: 5px 0;" /> %</div>
+            <div>C - <input type="text" class="input-text" name="paretoC" value="<?=$_SESSION['paretoC']?>" style="width: 30px;" /> %</div>
+        </td>
+        </tr>
+            </table>
+
+        <span class="submit-button cm-button-main">
+            <input class="cm-process-items submitStat<?=$vars['compare']?>" type="submit" value="Сформировать" />
+        </span>
+    </form>
+
+    <div style="right:0; top: 10px; position: absolute; text-align: right;">
+        <h3>Калькуляция</h3>
+    <?
+        echo'100%='.number_format($vars['all']['total'], 0, ',', ' ').'<br />';
+        echo'&nbsp;&nbsp;80%='.number_format($vars['pareto'], 0, ',', ' ').'<br />';
+        echo'&nbsp;&nbsp;A='.number_format($vars['paretoA'], 0, ',', ' ').'<br />';
+        echo'&nbsp;&nbsp;B='.number_format($vars['paretoB'], 0, ',', ' ').'<br />';
+        echo'&nbsp;&nbsp;C='.number_format($vars['paretoC'], 0, ',', ' ').'<br />';
+    ?>
+    </div>
+</div>
+</div></div></div></div>
+
+<div class="main_column" style="padding-bottom: 20px;">
+<div class="items-container multi-level">
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="table table-fixed hidden-inputs">
+	<tr>
+        <th width="">АВС</th>
+
+		<th width="">Название товара</th>
+		<th width=""><a href="/admin/stat_abc_users/order/amount">Количество в заказах</a></th>
+        <th width=""><a href="/admin/stat_abc_users">Сумма в заказах</a></th>
+        <th style="text-align:center; width: 85px;">% ABC</th>
+		<th style="text-align:center; width: 115px;">% всех продаж</th>
+	</tr>
+	<?php
+        $total=0;
+        $other_amount=0;
+        $other_sum=0;
+        $sales_all=0;
+		foreach($vars['product'] as $row)
+		{
+            $discount = ($row['total']*100) / $vars['pareto'];
+            $sum = ($row['total']*100) / $vars['all']['total'];
+
+            if($total<=$vars['pareto'])
+            {
+                $pareto='';
+                if($total<$vars['paretoA'])$pareto='A';
+                elseif($total>$vars['paretoA']&&$total<($vars['paretoA']+$vars['paretoB']))$pareto='B';
+                else $pareto='C';
+                $total+=$row['total'];
+
+                $sales = number_format($sum, 2, '.', '');
+                $sales_all+=$sales;
+
+                echo'<tr class="color'.$pareto.'">
+                        <td>'.$pareto.'</td>
+
+                        <td><a href="/admin/users/edit/'.$row['user_id'].'" target="_blank">'.$row['name'].' ('.$row['email'].')</a></a></td>
+                        <td class="center">'.$row['amount'].'</td>
+                        <td>'.number_format($row['total'], 0, ',', ' ').'</td>
+                        <td style="text-align:center;">'.number_format($discount, 2, '.', '').'%</td>
+                        <td style="text-align:center;">'.$sales.'%</td>
+                    </tr>';
+
+            }
+            else{
+                $other_amount+=$row['amount'];
+                $other_sum+=$row['total'];
+            }
+            //echo $total."+=".$row['total'].'<br />';
+            //if($total>=$vars['pareto'])break;
+		}
+        $other_sales = 100 - $sales_all;
+        echo'<tr class="colorOther">
+                <td colspan="2">Другие</td>
+                <td class="center">'.$other_amount.'</td>
+                <td>'.$other_sum.'</td>
+                <td style="text-align:center;"></td>
+                <td style="text-align:center;">'.$other_sales.'%</td>
+            </tr>';
+	?>
+</table>
+</div>

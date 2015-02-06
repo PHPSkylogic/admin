@@ -1,0 +1,129 @@
+<div id="curr_cat" url="<? if(isset($vars['curr_cat']['url']))echo $vars['curr_cat']['url'];?>" title="<? if(isset($vars['brend']))echo'librend_'.$vars['brend']['id'];elseif(isset($vars['curr_cat']['id']))echo 'licat_'.$vars['curr_cat']['id'];?>"></div>
+<?
+	if(isset($vars['curr_cat']['url']))echo'<input type="hidden" id="curr_cat" url="'.$vars['curr_cat']['url'].'" />';
+	$title='';
+	if(isset($vars['curr_cat']['id']))$title='licat_'.$vars['curr_cat']['id'];
+	if(!isset($vars['curr_cat']['url']))$vars['curr_cat']['url']='';
+
+	
+	/*
+    if(isset($vars['subcats'])&&count($vars['subcats'])!=0)
+    {
+        echo '<div class="sub-cats">';
+        foreach($vars['subcats'] as $row)
+        {
+			$class='';
+            if($row['catalog_id']==$vars['curr_cat']['id'])$class=' class="hov_sub_cat"';
+			
+			echo'<div'.$class.'><a href="/catalog/'.$row['url'].'">'.$row['name'].'   '.$row['count'].'</a></div>';
+        }
+        echo '</div>';
+    }
+	*/
+
+	// подкаталоги...
+	
+	if(isset($vars['top_cat']))
+	{
+		echo'<div class="clear"></div>';
+		$i=0;
+		foreach($vars['top_cat'] as $row)
+		{
+			if($row['sub']==0)
+			{
+                if(file_exists($row['photo']))$src='<img alt="'.$row['name'].'" src="/'.$row['photo'].'" class="photo_cat" title="'.$row['name'].'" alt="'.$row['name'].'" />';
+                else $src='<img alt="" src="/files/default.jpg" class="photo_cat" />';
+                echo'<div class="cat_block">
+					<a href="'.LINK.'/catalog/'.$row['url'].'">
+					    '.$src.'
+						<span>'.$row['name'].'</span>
+					</a>
+				 </div>';
+				$i++;
+			}
+		}
+		
+		//if(isset($vars['novelty']))echo $vars['novelty'];
+	}
+	else{
+	
+	
+	
+?>
+	
+    <div class="clear"></div>
+    <?
+		if(isset($vars['curr_cat']['name']))echo'<h1 class="title">'.$vars['curr_cat']['name'].'</h1>';
+
+		
+	?>
+    <div id="sort_block">
+
+        <div class="sort_td" style="width:278px; padding:0 10px 0 220px;">
+            <form method="post" id="sort_form">
+                <label for="sort_block_select"><?=$vars['translate']['sort']?>: </label>
+                <select name="sort" onchange="submit();">
+                    <option value="">по умолчанию</option>
+                    <option value="price-asc"<? if($_SESSION['sort']=='price asc, tb.id desc')echo' selected="selected"';?>>по возрастающей цене</option>
+                    <option value="price-desc"<? if($_SESSION['sort']=='price desc, tb.id desc')echo' selected="selected"';?>>по убывающей цене</option>
+                </select>
+            </form>
+
+        </div>
+        <div class="sort_td">
+            <form method="post" id="onpage_form">
+                <label for=""><?=$vars['translate']['onpage']?>: </label>
+                <select name="onpage" onchange="submit();">
+                    <?
+                    $i=0;
+                    $cnt=count($vars['onpage'])-1;
+                    foreach($vars['onpage'] as $row)
+                    {
+                        echo'<option value="'.$row.'" ';if($_SESSION['onpage']==$row)echo' selected="selected"';echo'>'.$row.'</option>';
+                        $i++;
+                    }
+                    ?>
+                </select>
+            </form>
+        </div>
+        <div class="sort_td" style="padding: 0;">
+            <div id="catalog_grid">
+                <div class="sort_td">
+                    Вид:
+                </div>
+                <div class="sort_td">
+                    <div id="sort_line" class="sort_view<? if($_SESSION['sort_view']=='sort_line')echo' active';?>"></div>
+                </div>
+                <div class="sort_td">
+                    <div id="sort_table" class="sort_view<? if($_SESSION['sort_view']=='sort_table')echo' active';?>"></div>
+                </div>
+                <div class="sort_td" style="padding: 0;">
+                    <div id="sort_table_rubber" class="sort_view<? if($_SESSION['sort_view']=='sort_table_rubber')echo' active';?>"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="load_product">
+        <?
+			if(!is_array($vars['list']))echo $vars['list'];
+			else{
+				echo '<div class="count_product2">Показано товаров: '.$vars['list']['count'].' </div>';
+				$i=0;
+                echo'<div>';
+				foreach($vars['list']['list'] as $row)
+				{
+					include "product.phtml";
+					$i++;
+				}
+                echo'</div>';
+				echo $vars['list']['paging'];
+			}
+        ?>
+        <div class="clear"></div>
+    </div>
+<?
+        if(isset($vars['curr_cat']['body']))echo htmlspecialchars_decode($vars['curr_cat']['body']);
+	
+	}
+?>
+<div class="clear"></div>

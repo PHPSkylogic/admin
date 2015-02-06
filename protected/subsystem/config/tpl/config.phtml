@@ -1,0 +1,77 @@
+<div class="cm-notification-container"></div>
+<div id="message"><?=$vars['message']?></div>
+<div>
+	<div class="clear mainbox-title-container">
+		<div class="tools-container"><span class="action-add"> <a href="/admin/<?=$vars['action']?>/subsystem/config/addsubsystem">Добавить</a> </span> </div>
+		<h1 class="mainbox-title float-left">Настройки "<?=$vars['modules_name']?>"</h1>
+	</div>
+	<div class="mainbox-body">
+		<div id="ds_15014" class="clear">
+			
+		</div>
+		<div id="content_manage_users">
+			<form name="userlist_form" method="post" action="/admin/<?=$vars['action']?>/subsystem/config/update">
+				<div id="pagination_contents">
+					<div class="items-container multi-level">
+                    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="table table-fixed hidden-inputs tb_sort">
+                        <tr>
+                            <th width="30">ID</th>
+                            <th>Комментарий</th>
+                            <th width="250">Значение</th>
+                        </tr>
+                        <?php
+                            foreach($vars['list'] as $row)
+                            {
+								$input='';
+								if($row['type']=='text')$input='<input type="text" name="value'.$row['id'].'" value="'.$row['value'].'" class="input-text" style="width:190px;" />';
+								elseif($row['type']=='checkbox')
+								{
+									$checked='';
+									if($row['value']==1)$checked=' checked="checked"';
+									$input='<label class="switch">
+												<input type="checkbox" name="value'.$row['id'].'" value="1" '.$checked.' class="switch-input"  />
+												<span class="switch-label" data-on="Да" data-off="Нет"></span>
+												<span class="switch-handle"></span>
+											</label>';
+								}
+								elseif($row['type']=='radio')
+								{
+									$checked0='';
+									$checked1='';
+									if($row['value']==1)$checked1=' checked="checked"';
+									else $checked0=' checked="checked"';
+									
+									$input='<input type="radio" name="value'.$row['id'].'" value="0" '.$checked0.' />
+											<input type="radio" name="value'.$row['id'].'" value="1" '.$checked1.' />';
+								}
+								elseif($row['type']=='textarea')$input='<textarea name="value'.$row['id'].'" class="input-textarea" style="resize: none; height:17px; width:190px;">'.$row['value'].'</textarea>';
+								
+                                echo'<tr>
+                                        <td><span>'.$row['id'].'</span><input type="hidden" value="'.$row['id'].'" name="save_id[]" /></td>
+                                        
+                                        <td><textarea name="comment[]" class="input-textarea" style="resize: none; height:17px; width:600px;">'.$row['comment'].'</textarea></td>
+										<td>'.$input.'</td>
+                                    </tr>';
+                            }
+                        ?>
+                    </table>
+                    </div>
+				</div>
+				<div class="buttons-container buttons-bg">
+                <div class="cm-buttons-floating hidden" style="display: block;">
+					<div class="cm-buttons-placeholder">
+						<div class="float-left">
+							<span class="submit-button cm-button-main">
+								<input type="submit" value="Сохранить" name="update" class="">
+							</span>
+						</div>
+					</div>
+					<div class="cm-buttons-floating hidden"></div>
+				</div>
+                </div>
+				<input type="hidden" value="<?=$vars['action']?>" id="action" />
+			</form>
+			</div>
+		</div>
+	</div>
+</div>

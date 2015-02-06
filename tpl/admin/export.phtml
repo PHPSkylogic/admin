@@ -1,0 +1,45 @@
+<div class="cm-notification-container"></div>
+<div>
+    <div class="clear mainbox-title-container">
+        <h1 class="mainbox-title float-left"><?=$vars['name']?></h1>
+    </div>
+
+    <h2 class="subheader">Выберите данные для выгрузки</h2>
+    <div class="mainbox-body">
+        <div id="content_manage_users">
+            <form name="userlist_form" method="post" action="/admin/<?=$vars['action'].$vars['path']?>">
+                <fieldset>
+                    <div class="three_columns_set">
+                        <?php
+                            foreach($vars['columns'] as $row)
+                            {
+                                echo '<input type="checkbox" name="columns[]" value="'.$row['Field'].'" id="row_'.$row['Field'].'"  checked="checked" />';
+                                echo '<label for="row_'.$row['Field'].'" >'.$row['Field'].'</label>';
+                                echo '<br/>';
+                            }
+                        ?>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <h2 class="subheader">Выберите формат файла</h2>
+                    <select name="file_format" style="width:200px;">
+                        <option value="xls">XLS</option>
+                        <option value="csv">CSV</option>
+                        <option value="html">HTML</option>
+                    </select>
+                </fieldset>
+            <div class="buttons-container buttons-bg">
+                    <div class="cm-buttons-placeholder">
+                        <div class="float-left">
+							<span class="submit-button cm-button-main">
+								<input type="submit" value="Скачать" name="download" />
+							</span>
+                        </div>
+                    </div>
+                    <div class="cm-buttons-floating hidden"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,45 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(function() {
+        $(function() {
+            var orders_count = google.visualization.arrayToDataTable([<?=$vars['text']?>]);
+            var options_count = { title: 'Количество заказов:' };
+            var chart_count = new google.visualization.AreaChart(document.getElementById('chart_div<?=$vars['compare']?>'));
+            chart_count.draw(orders_count, options_count);
+        });
+    });
+
+</script>
+
+<div class="statistics-box inventory">
+    <div id="title">
+        <h2 class="strong">Сумма заказов</h2>
+        <div class="statistics-body clear" style="padding:10px;">
+            <form method="post">
+                <label class="cm-required" for="page">От:</label>
+                <input type="text" class="input-text cm-calendar hasDatepicker" value="<?=$vars['date_start']?>" name="start<?=$vars['compare']?>" id="start<?=$vars['compare']?>" />
+                <label class="cm-required" for="page">До:</label>
+                <input type="text" class="input-text cm-calendar hasDatepicker" value="<?=$vars['date_end']?>" size="55" name="end<?=$vars['compare']?>" id="end<?=$vars['compare']?>" />
+                <span class="submit-button cm-button-main">
+                    <input class="cm-process-items submitStat<?=$vars['compare']?>" type="submit" value="OK" />
+                </span>
+            </form>
+        </div>
+    </div>
+    <div class="statistics-body">
+
+        <div id="stats">
+            <div id="chart_div<?=$vars['compare']?>" style="width: 100%; height: 250px;"></div>
+        </div>
+
+        <div class="itogo">
+            <p>
+                <b>Итого кол-во: &nbsp;</b><span id="total_sum"><?=sizeof($vars['list']);?></span><br />
+            </p>
+        </div>
+    </div>
+
+
+</div>

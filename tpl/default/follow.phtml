@@ -1,0 +1,17 @@
+<div id="follow_price" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:300px; left:57%;">
+  <form method="post" action="<?=STRING::getUrl3('inform');?>follow" id="follow_form">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    <h3 id="myModalLabel">СЛЕДИТЬ ЗА ЦЕНОЙ</h3>
+  </div>
+  <div class="modal-body">
+  	<div id="follow_message" class="err"></div>
+  	<input type="text" name="follow_name" value="" placeholder="Ваш имя" required="required" style="width:257px;" />
+    <input type="text" name="follow_email" value="" placeholder="Ваш E-mail" required="required" style="width:257px;" />
+    <input type="hidden" name="follow_id" id="follow_id" value="" />
+  </div>
+  <div class="modal-footer" style="padding:17px 33px;">
+    <input type="submit" name="send_follow" value="<?=$vars['translate']['send_message']?>" class="submit" />
+  </div>
+  </form>
+</div>

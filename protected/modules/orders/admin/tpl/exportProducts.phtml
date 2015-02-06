@@ -1,0 +1,120 @@
+<div class="cm-notification-container"></div>
+<div>
+	<div class="clear mainbox-title-container">
+		<h1 class="mainbox-title float-left"><?=$vars['name']?></h1>
+	</div>
+
+	<h2 class="subheader">Выберите данные для выгрузки</h2>
+	<div class="mainbox-body">
+		<div id="content_manage_users">
+			<form name="userlist_form" method="post" action="/admin/<?=$vars['action'].$vars['path']?>">
+				<fieldset>
+					<div class="date_from-to">
+						<label for='from'>От </label><input id='from' name='start' class="input-text cm-calendar hasDatepicker" value="<?=$_SESSION['start_provider']?>" type="text">
+						<label for='to'>До </label><input id='to' name='end' class="input-text cm-calendar hasDatepicker" value="<?=$_SESSION['end_provider']?>" type="text">
+					</div>
+				</fieldset>
+                <br /><br />
+				<fieldset>
+					<h2 class="subheader">Выберите поставщика</h2>
+					<select name="provider" style="width:200px;">
+						<option value="0">Все</option>
+						<?
+						foreach ($vars['providers'] as $row)
+						{
+							echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
+						}
+						?>
+					</select>
+				</fieldset><br /><br />
+				<fieldset>
+					<h2 class="subheader">Выберите формат файла</h2>
+					<select name="file_format" style="width:200px;">
+						<option value="xls">XLS</option>
+						<option value="csv">CSV</option>
+						<option value="html">HTML</option>
+					</select>
+				</fieldset>
+				<? if(isset($_POST['print_prod'], $vars['product']) && !empty($vars['product']))
+				{ ?>
+					<div id="prod_print" style="display: none;">
+						<?
+						$header = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+						"http://www.w3.org/TR/html4/loose.dtd">
+						<head>
+							<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+							<title>Export File - Skylogic CMS</title>
+						</head>
+						<body>
+						<h2>Выгрузка поставщику - ';
+						if($_POST['provider']==0) echo 'Все поставщики';
+						else foreach ($vars['providers'] as $pr) {
+							if($pr['id']==$_POST['provider']) echo $pr['name'];
+						}
+
+						echo 'за период '.$_SESSION['start_provider'].' - '.$_SESSION['end_provider'].'</h2>';
+
+						$table = '<table width="100%" cellspacing="0" border="1">
+                   		<thead><tr>';
+
+						$table .= '<tbody>';
+						$table .= '<tr>
+							<td>№</td>
+							<td>Код</td>
+							<td>Наименование</td>
+							<td>Поставщик</td>
+							<td>Код поставщика</td>
+							<td>Цвет</td>
+							<td>Размер</td>
+							<td>Количество</td>
+							<td>Цена</td>
+							<td>Сумма</td>
+							<td>Фото</td>
+						</tr>';
+
+						foreach($vars['product'] as $row) {
+
+							$table .= '<tr>';
+							$table .= '<td>'.$row['product_id'].'</td>';
+							$table .= '<td>'.$row['code'].'</td>';
+							$table .= '<td>'.$row['name'].'</td>';
+							$table .= '<td>'.$row['provider'].'</td>';
+							$table .= '<td>'.$row['provider_code'].'</td>';
+							$table .= '<td>'.$row['color'].'</td>';
+							$table .= '<td>'.$row['size'].'</td>';
+							$table .= '<td>'.$row['amount'].'</td>';
+							$table .= '<td>'.$row['price'].'</td>';
+							$table .= '<td>'.$row['summa'].'</td>';
+							$table .= '<td><img src="/'.$row['photo'].'" style="width: 100px;"/></td>';
+							$table .= '</tr>';
+						}
+						$table .= '</tbody></table>';
+						$footer = '</body></html>';
+
+						echo $header.$table.$footer;
+						echo '<script>
+						$(document).ready(function(){
+							printpage("prod_print");
+						})
+						</script>';
+						?>
+					</div>
+				<? } ?>
+			<div class="buttons-container buttons-bg">
+					<div class="cm-buttons-placeholder">
+						<div class="float-left">
+							<span class="submit-button cm-button-main">
+								<input type="submit" value="Скачать" name="download" />
+							</span>
+							<span class="submit-button cm-button-main">
+								<input type="submit" value="Распечатать" name="print_prod" id="print_prod"/>
+							</span>
+						</div>
+					</div>
+					<div class="cm-buttons-floating hidden"></div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</div>

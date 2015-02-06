@@ -1,0 +1,213 @@
+<link rel="stylesheet" type="text/css" href="/css/jquery-ui.css" />
+<script type="text/javascript" src="/js/jquery-ui-1.8.18.custom.js"></script>
+<script type="text/javascript" src="/js/ui.datepicker-ru.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $( "#start_date, #end_date" ).datepicker({
+            firstDay: 1,
+            local:'ru',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1945:'+(new Date).getFullYear(),
+            defaultDate: '01/01/1985',
+            regional:'ru',
+            dateFormat:"yy-mm-dd"
+        });
+    });
+
+</script>
+
+<div class="tb_h">
+    <div class="left_col">
+        <?
+        echo '<div class="title" style="font-size:24px;">'.$vars['translate']['cabinet'].'</div>
+                <div class="left_menu" id="sidebar">
+                    <ul>
+                        <li class="hov_left"><a href="'.LINK.'/users/orders" class="other_link">'.$vars['translate']['my_orders'].'</a></li>
+                        <li><a href="'.LINK.'/users" class="other_link">'.$vars['translate']['my_data'].'</a></li>
+                        <li><a href="'.LINK.'/users/logout">'.$vars['translate']['exit'].'</a></li>
+                    </ul>
+                </div>';
+        if(isset($vars['filters']))echo $vars['filters'];
+        ?>
+    </div>
+    <div class="right_col">
+        <div class="title" style="font-size:24px;">Статистика покупок</div>
+        <div class="blue_shit">
+            <div class="order_dates">
+                <form method="post" id="date_form">
+                    <label for="start_date"><img src="<?=IMAGES?>date.jpg" /></label><input id="start_date" name="start_date" type="text" value="<?=$_SESSION['start_date']?>" />
+                    <label for="">—</label>
+                    <label for="end_date"><img src="<?=IMAGES?>date.jpg" /></label><input id="end_date" name="end_date" type="text" value="<?=$_SESSION['end_date']?>" />
+
+                    <label for=""><input type="submit" value=" OK " class="submit" /></label>
+                </form>
+            </div>
+            <div class="clear"></div>
+
+            <div class="tb">
+                <div class="tb_row">
+                    <div class="td">Общая&nbsp;сумма:</div>
+                    <div class="td line_shit"><div></div></div>
+                    <div class="td val"><?=Numeric::formatPrice($vars['info']['total'])?></div>
+                </div>
+            </div>
+            <div class="tb">
+                <div class="tb_row">
+                    <div class="td">Количество&nbsp;заказов:</div>
+                    <div class="td line_shit"><div></div></div>
+                    <div class="td val"><?=$vars['info']['cnt']?></div>
+                </div>
+            </div>
+            <div class="blue_shit_text">по состоянию на <?=date("d-m-Y H:i");?></div>
+        </div>
+<?
+	//<h2 align="center"><?=$vars['translate']['my_orders']</h2>
+	if(!isset($vars['order']))
+	{
+        $i=0;
+        foreach($vars['orders'] as $row)
+        {
+            echo'
+
+
+            <div class="borderimage borderimage2" style="position:relative; z-index:0;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td width="150">
+                            ID заказа: <b>'.$row['id'].'</b><br />
+                            <div style="font-size:12px;">Дата: '.Date::date_view($row['date_add'], "dd/mm/YY, hh:ii").'</div>
+                        </td>
+                        <td class="line_right"></td>
+                        <td style="padding-left:10px;">Статус: <span class="status_name">'.$row['name'].'</span></td>
+                        <td width="110" style=" padding-left:10px;"><a href="/orders/all/repeat/'.$row['id'].'"  target="_blank" class="repeatOrder submit">Повторить</a></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="borderimage" style="margin:-26px 0 0 0;">
+            <table width="100%" class="orders" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th width="60"> Фото</th>
+                    <th style="text-align:left;">Наименования</th>
+                    <th width="70">Кол-во</th>
+                    <th width="70">Цена</th>
+                    <th width="120">Сумма</th>
+                </tr>';
+
+            $i=0;
+            foreach($vars['product'] as $row2)
+            {
+
+                if($row['id']==$row2['orders_id'])
+                {
+                    $dir=Dir::createDir($row2['product_id']);
+                    if(file_exists($dir[0]."{$row2['product_id']}_s.jpg"))
+                        $src='<img alt="'.$row2['name'].'" title="'.$row2['name'].'" src="/'.$dir[0].$row2['product_id'].'_s.jpg" style="width: 90px;" />';
+                    else $src='<img alt="" src="/files/default.jpg" style="width: 90px;" />';
+
+                    echo"<tr>
+                            <td><a href='/product/{$row2['url']}' target='_blank' class='radius_photo'>$src</a></td>
+                            <td style='text-align:left;'>
+                                <a href='/product/{$row2['url']}' target='_blank' class='val2'>{$row2['name']}</a>
+                            </td>
+                            <td style='text-align:center;'>".$row2['amount']."</td>
+                            <td style='text-align:center;'><span class='val'>".$row2['price']."</span></td>
+                            <td style='text-align:center;'><span class='val'>".Numeric::formatPrice($row2['sum'])."</span></td>
+                        </tr>";
+                    $i++;
+                }
+            }
+
+            echo'</table>
+
+    <div class="total_sum">Сумма за заказ:  <span class="val">'.Numeric::formatPrice($row['sum']).'</span></div>
+    </div>';
+        }
+	}
+	else{
+		if($vars['order']['id'])
+		{
+		?>
+        <a href="<?=LINK?>/users/orders"><?=$vars['translate']['return_orders']?></a><br /><br />
+         <table width="100%" class="orders2 orders3" cellpadding="0" cellspacing="0">
+         	<tr>
+                <th><?=$vars['translate']['title']?></th>
+                <th width="100"><?=$vars['translate']['amount']?></th>
+                <th width="100"><?=$vars['translate']['price']?></th>
+                <th width="100"><?=$vars['translate']['sum']?></th>
+            </tr>
+        <?
+			$i=0;
+			$summa2=0;
+			foreach($vars['product'] as $row)
+			{				
+				$price=Numeric::formatPrice($row['price'], $vars['currency']);
+				$summa = Numeric::formatPrice($row['price']*$row['amount'], $vars['currency']);
+				$summa2+=$row['price'] * $row['amount'];
+
+				echo"<tr>
+						<td><a href='".LINK."/product/{$row['url']}'>{$row['name']}</a></td>
+						<td style='padding-left:34px;'>{$row['amount']}</td>
+						<td class='price'>{$price}</td>
+						<td>{$summa}</td>
+					</tr>";
+				$i++;	
+			}
+			$summa = Numeric::formatPrice($vars['order']['sum'], $vars['currency']);
+		?>
+
+		<tr style="background-color:transparent; border-top:2px solid #000;">
+        	<td colspan="4" class="total_cart"><?=$vars['translate']['total']?>: <?=$summa?></td>
+        </tr>
+        </table>
+        
+        <br /><br />
+
+        <h2 style="width:864px; margin-bottom:10px;"><?=$vars['translate']['info_order']?></h2>
+        <div class="parag"><span><?=$vars['translate']['order_id']?>: </span> #<?=$vars['order']['id']?></div>
+        <div class="parag"><span><?=$vars['translate']['order_date']?>: </span> <?=Date::date_view($vars['order']['date_add'], "dd/mm/YY, hh:ii")?></div>
+        <div class="parag"><span><?=$vars['translate']['order_status']?>: </span> <?=$vars['order']['name']?></div>
+        <?
+            if($vars['order']['payment']!="")
+            echo'<div class="parag"><span>'.$vars['translate']['payment'].': </span> '.$vars['order']['payment'].'</div>';   
+            
+            if($vars['order']['delivery']!="")
+            echo'<div class="parag"><span>'.$vars['translate']['delivery'].': </span> '.$vars['order']['delivery'].'</div>';   
+
+            if($vars['order']['username']!="")
+            echo'<div class="parag"><span>'.$vars['translate']['name'].': </span>'.$vars['order']['username'].'</div>';   
+            
+            if($vars['order']['email']!="")
+            echo'<div class="parag"><span>E-mail: </span>'.$vars['order']['email'].'</div>';   
+            
+            if($vars['order']['phone']!="")
+            echo'<div class="parag"><span>'.$vars['translate']['phone'].': </span>'.$vars['order']['phone'].'</div>';  
+
+            if($vars['order']['country']!="")
+            echo'<div class="parag"><span>'.$vars['translate']['country'].': </span> '.$vars['order']['country'].'</div>';
+               
+            if($vars['order']['city']!="")
+            echo'<div class="parag"><span>'.$vars['translate']['city'].': </span>'.$vars['order']['city'].'</div>';   
+            
+            if($vars['order']['post_index']!="")
+            echo'<div class="parag"><span>'.$vars['translate']['post_index'].': </span>'.$vars['order']['post_index'].'</div>';   
+			
+			if($vars['order']['address']!="")
+            echo'<div class="parag"><span>'.$vars['translate']['address'].': </span>'.$vars['order']['address'].'</div>'; 
+			
+			if($vars['order']['code_discount']!="")
+            echo'<div class="parag"><span>Промо код: </span>'.$vars['order']['code_discount'].'</div>';   
+			
+			if($vars['order']['mailer']!=0)
+            echo'<div class="parag"><span>Подписаться на рассылку акций и спецпредложений:</span> Да</div>';   
+			
+			 if($vars['order']['comment']!="")
+            echo '<div class="parag"><span>'.$vars['translate']['comments_order'].': </span> '.htmlspecialchars_decode($vars['order']['comment'].'</div>');   
+
+	}
+	else echo"<div class='err'>{$vars['translate']['order_not_fount']}</div>";
+}
+?>
+    </div>
+    <div class="clear"></div>

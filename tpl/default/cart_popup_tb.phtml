@@ -1,0 +1,74 @@
+<?php if(isset($vars['message']))echo $vars['message'];?>
+<form method="post" action="<?=LINK?>/orders/all">
+    <table width="100%" class="orders2 cart_popup_tb" cellpadding="0" cellspacing="0">
+    	<tr>
+            <th style="width:50px;"><?=$vars['translate']['title']?></th>
+            <th></th>
+            <th style="width:120px;"><?=$vars['translate']['amount']?></th>
+            <th style="width:70px;"><?=$vars['translate']['price']?></th>
+            <th style="width:110px;"><?=$vars['translate']['sum']?></th>
+            <th style="width:25px;"></th>
+        </tr>
+    <?
+        $i=0;
+        $summa2=0;
+        $summa3=0;
+        foreach($vars['product'] as $row)
+        {
+            //if($row['discount']==0)$row['discount']=$vars['discount'];
+            $price = Numeric::viewPrice($row['price'], $row['discount']);
+            $summa = Numeric::formatPrice($price['cur_price']*$row['amount']);
+            $summa2+=$price['cur_price']*$row['amount'];
+            $summa3+=$row['price']*$row['amount'];
+            
+			if($row['photo_basket']!=''&&file_exists($row['photo_basket']))
+			{
+                $src='<img alt="'.$row['name'].'" title="'.$row['name'].'" src="/'.$row['photo_basket'].'" style="width:70px;" />';
+			}
+            elseif(file_exists($row['photo']))
+			{
+                $src='<img alt="'.$row['name'].'" title="'.$row['name'].'" src="/'.$row['photo'].'" style="width:70px;" />';
+			}
+            else $src='<img alt="" src="/files/default.jpg" style="width:70px;" />';
+            echo"
+            <tr>
+                <td style='padding-left:0;'>
+                    <a href='".LINK."/product/{$row['url']}'>$src</a></div>
+                </td>
+				<td><a href='".LINK."/product/{$row['url']}'>{$row['name']}</a></td>
+                <td>
+                    <div class='productin-count'>
+						<a href='javascript:void(0);' class='countchange cnt-down' rel='cntp_".$row['cart_id']."'>&nbsp;</a>
+                        <input type='text' id='cntp_".$row['cart_id']."' dir='".$row['cart_id']."' value='{$row['amount']}' max='1000' class='amount cart_update' name='amount[]' />
+                        <a href='javascript:void(0);' class='countchange cnt-up' rel='cntp_".$row['cart_id']."'>&nbsp;</a>
+                    </div>
+
+                    <input type='hidden' value='{$row['cart_id']}' name='id[]' />
+                </td>
+                <td class='price'>
+                    {$price['price']} <span>{$price['old_price']}</span>
+                </td>
+                <td class='price'>
+                    <span id='sum_cnt_".$row['id']."'>{$summa}</span>
+                </td>
+				<td>
+					<a href='javascript:update_cart(\"{$row['cart_id']}\", 0, \"delete\");' title='".$vars['translate']['delete']."'>
+						<img src='/images/del4.png' />
+					</a>
+				</td>
+            </tr>";
+            $i++;	
+        }
+        
+    ?>
+        <tr style="background-color:transparent; border-top:2px solid #444;">
+            <td colspan="3" style="text-align:right; padding:0; border:none;">
+            	
+            </td>
+            <td colspan="3" class="total_cart" style="padding:5px; border:none;">
+                <div class="total_cart" id="total_cart"><?=$vars['translate']['all2']?>: <?=Numeric::formatPrice($summa2)?></div>
+                <div id="deliver_price"></div>
+            </td>
+        </tr>
+    </table>
+</form>	

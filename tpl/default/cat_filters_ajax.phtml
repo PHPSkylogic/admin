@@ -1,0 +1,156 @@
+<?
+if(isset($vars['params'][0]))
+{
+	echo'<input type="hidden" value="'.$vars['params_url'].'" id="params_url" />';
+	//CHEKED  FILTERS BEGIN
+	
+	$checkedParams = '';
+	if(isset($vars['price'][0]))
+	{
+		$checkedParams.='<label for="" style="margin:10px 0 0; line-height:15px;">'.$vars['translate']['price'].'</label>
+			 <div class="filter">
+				<a href="javascript:void(0);" class="clear_price_range">х&nbsp;&nbsp; от '.$vars['price'][0].' до '.$vars['price'][1].' '.$vars['currency']['icon'].'</a>
+			 </div>';	
+	}
+	
+	foreach($vars['params'] as $row)
+	{
+		if($row['sub']==0)
+		{
+			$sub='';
+			foreach($vars['params'] as $row2)
+			{
+				if($row2['sub']==$row['id'])
+				{
+					
+					for($i=0;$i<count($_SESSION['params']);$i++)
+					{
+						if(isset($_SESSION['params'][$i])&&$_SESSION['params'][$i] == $row2['id'])
+						{
+							$sub.='<div class="filter">
+										<a href="javascript:void(0);" class="clear_param" data-id="'.$row2['id'].'">х&nbsp;&nbsp;'.$row2['name'].'</a>
+									</div>';
+						}
+					}
+				}
+			}
+			if($sub!='')
+			{
+				$checkedParams.='<label for="" style="margin:10px 0 0; line-height:15px;">'.$row['name'].'</label>'.$sub;	
+			}
+			
+		}
+	}
+
+	if($checkedParams!='')
+	{
+		echo '<li style="padding-top:1px;">
+					<h4 style="margin:10px 0;">'.$vars['translate']['select_filters'].'</h4>
+					'.$checkedParams.'
+					<div class="clear_group_all" rel="groupprice">х&nbsp;&nbsp;'.$vars['translate']['clear_all_filters'].'</div>
+			  </li>';
+	}
+	//END CHECKED FILTERS
+
+	echo'<div id="params">';	
+	foreach($vars['params'] as $row)
+	{
+		if($row['sub']==0)
+		{
+			$sub='';
+			$y=0;
+			$hide=false;
+			$show='';
+			foreach($vars['params'] as $row2)
+			{
+				$checked = '';
+				
+				if($row2['sub']==$row['id'])
+				{
+
+					for($i=0;$i<count($_SESSION['params']);$i++)
+					{
+						if(isset($_SESSION['params'][$i])&&$_SESSION['params'][$i] == $row2['id'])
+						{
+							$checked='checked';
+							$show=' show_group';
+							break;
+						}
+					}
+
+					if($row2['count']==0)
+					{
+						$checked.=' uncheck';
+					}
+					
+					if($checked=='checked')$row2['count']='';
+					else $row2['count']=' ('.$row2['count'].')';
+					
+					if($vars['params_limit']==$y)
+					{
+						$sub.='<div class="hide_params" id="filters'.$row['id'].'">';
+						$hide=true;
+					}
+
+					$sub.='<div class="params filter">
+						   	<div class="set_params checkbox '.$checked.'" pid="'.$row2['sub'].'-'.$row2['id'].'" url="'.$row2['url'].'" id="filter'.$row2['id'].'">'.$row2['name'].$row2['count'].'</div>
+						   </div>';
+					$y++;
+				}
+			}
+		
+			if($sub!='')
+			{
+				if($hide)
+				{
+					$sub.='</div>';
+					if($show!='')$sub.='<a href="#" class="show_filters" rel="'.$row['id'].'_'.$vars['translate']['all_filter'].'">'.$vars['translate']['hide_filter'].'</a>';
+					else $sub.='<a href="#" class="show_filters" rel="'.$row['id'].'_'.$vars['translate']['hide_filter'].'">'.$vars['translate']['all_filter'].'</a>';
+				}
+				if($show!='')$sub.='<div class="clear_group" rel="group'.$row['id'].'">х&nbsp;&nbsp;очистить</div>';
+				echo'<li>
+						 <label for="group'.$row['id'].'">'.$row['name'].'</label>
+						 <div id="group'.$row['id'].'" class="group_params'.$show.'">
+							'.$sub.'
+						 </div>
+					 </li>'; 
+				//echo'<li class="razd"></li>';
+			}
+			
+			
+		}
+		
+	}
+
+    /*$class='';
+    if(!isset($vars['price'][0]))$vars['price'][0]=0;
+    else $class='class="change_price"';
+
+    if(!isset($vars['price'][1]))$vars['price'][1]=$vars['price'][2];
+    echo'<li>
+             <script type="text/javascript">
+                $(document).ready(function(){
+                    init_range('.$vars['price'][0].', '.$vars['price'][1].', '.$vars['price'][2].');
+                });
+            </script>
+
+              <label for="amount">'.$vars['translate']['price'].', '.$vars['currency']['icon'].':</label>
+
+             <div id="slider-range"></div>
+
+             <input type="text" value="" id="price_from" />
+             <input type="text" value="" id="price_to" />
+             <input type="submit" value="OK" id="submit_price" '.$class.' />
+             <div class="clear_price_range">х&nbsp;&nbsp;очистить</div>
+         </li>';
+    echo'<li>
+             <label for="groupprice">'.$vars['translate']['price'].'</label>
+             <div id="groupprice" class="group_params">
+                От <input type="text" name="price_from" value="'.$_SESSION['price_from'][1].'" />&nbsp;&nbsp;&nbsp;
+                до <input type="text" name="price_to" value="'.$_SESSION['price_to'][1].'" /> '.$_SESSION['currency'][1]['icon'].'
+             </div>
+             <div class="clear_group" rel="groupprice">х&nbsp;&nbsp;очистить</div>
+         </li>';*/
+	echo'<div class="clear"></div></div>';
+}
+?>

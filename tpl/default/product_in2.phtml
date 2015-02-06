@@ -1,0 +1,183 @@
+<script type="text/javascript">
+jQuery(document).ready(function(){
+    jQuery('#mycarousel').jcarousel({
+			auto: 3,
+			autoPlay:2000,
+			scrollAfterAmount:3,
+			scrollInc:3,
+			wrap: 'circular',
+			scroll:1,
+			initCallback: mycarousel_initCallback
+		});
+		
+		<?
+			if(isset($vars['show_video']))
+			{
+				echo"show_video();";	
+			}
+		?>
+		
+});
+</script>
+
+<?
+	//include"fast_order.phtml";
+	include"follow.phtml";
+?>
+<div id="curr_cat" title="licat_<?=$vars['product']['catalog_id']?>"></div>
+<input type="hidden" id="product_id" value="<?=$vars['product']['id']?>" />
+<div class="product_in" id="MessForPrint">
+	<?		
+		$price=Numeric::viewPrice($vars['product']['price'], $vars['product']['discount']);
+		
+		if(isset($vars['message']))echo $vars['message'];
+		
+		$more_photo='';
+		if($vars['product']['photo']!=''&&file_exists($vars['product']['photo']))
+		{
+			$gab=getimagesize(str_replace('_s','',$vars['product']['photo']));
+			$class='';
+			if($gab[0]>390)$class='';
+			$src='<div id="img_load">
+					  <a href="/'.str_replace('_s','',$vars['product']['photo']).'" title="'.$vars['product']['name'].'"  class="easyzoom" rel="lightbox">
+						<img src="/'.str_replace('_s','',$vars['product']['photo']).'" alt="'.$vars['product']['name'].'" />
+					  </a>
+				  </div>';
+			//$src.='<a href="/'.str_replace('_s','',$vars['product']['photo']).'" rel="lightbox"><img src="'.IMAGES.'zoom.png" id="zoom" /></a>';
+			
+			$more_photo='<li>
+							<a href="/'.str_replace('_s','',$vars['product']['photo']).'" title="'.$vars['product']['name'].'" class="load_more_photo">
+								<img src="/'.$vars['product']['photo'].'" alt="'.$vars['product']['name'].'" />
+								<span class="border_cat hov_border"></span>
+							</a>
+						 </li>';
+		}
+		else $src='<img src="/files/default.jpg" />';
+	?>
+
+        <div class="photoblock">
+			<?		
+				echo $src;	
+                if(isset($vars['photo'][0]['id']))	
+                {
+                    $class=' class="no_slider"';
+                    if(isset($vars['photo'][2]['id']))$class='id="mycarousel" class="jcarousel jcarousel-skin-tango"';
+
+                    echo'<div class="more-photo"><ul '.$class.'>';
+					echo $more_photo;
+					$i=1;
+					foreach($vars['photo'] as $row)
+					{
+						echo'<li>
+								<a href="/'.str_replace('_s','',$row['photo']).'" title="'.$row['name'].'" class="load_more_photo" id="extra_photo'.$row['id'].'">
+									<img src="/'.$row['photo'].'" alt="'.$vars['translate']['photo'].' '.$i.' '.$vars['product']['name'].'" title="'.$vars['translate']['photo'].' '.$i.'" />
+									<span class="border_cat"></span>
+								</a>
+								<a href="/'.str_replace('_s','',$row['photo']).'" title="'.$row['name'].'"  rel="lightbox"></a>
+							 </li>';
+						$i++;	 
+					}
+					echo'<div class="clear"></div></ul></div>';
+                }
+            ?>
+        </div>
+        <div id="product_right">
+            <h1 class="title2"><?=$vars['product']['name']?></h1>
+        	<? echo $vars['product']['body_m'];?>
+            <div>
+                <div class="order-block">
+                    <div class="count_product">
+                        <label>Количество: </label>
+
+                        <div class="productin-count">
+                            <a href='javascript:void(0);' class='countchange cnt-down' rel='cnt_<?=$vars['product']['price_id']?>'>&nbsp;</a>
+                            <input type='text' id='cnt_<?=$vars['product']['price_id']?>' dir='<?=$vars['product']['price_id']?>' value='1' max='10' class='amount cart_update' name='amount[]' />
+                            <a href='javascript:void(0);' class='countchange cnt-up' rel='cnt_<?=$vars['product']['price_id']?>'>&nbsp;</a>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+
+                    <div class="prod_price" id="total"><?=$price['price'];?> <?=$price['old_price'];?></div>
+                <?
+                    
+                        
+                    if($vars['product']['brend_id']==1||$vars['product']['brend_id']==8)
+                    {
+                        echo'
+                             <noindex><button class="buy" id="price_id" name="'.$vars['product']['price_id'].'" type="button">'.$vars['translate']['buy'].'</button></noindex>
+                             <div class="status_product">'.$vars['product']['brend'].'</div>';	
+                    }
+                    elseif($vars['product']['brend_id']==2)
+                    {
+                        echo'
+                             <noindex><a href="#inform" data-toggle="modal" class="buy nostock" rel="'.$vars['product']['id'].'">Сообщить</a></noindex>
+                             <div class="status_product not_available">'.$vars['product']['brend'].'</div>';	
+                    }
+                    elseif($vars['product']['brend_id']==3)
+                    {
+                        echo'
+                             <noindex><button class="buy expect" id="price_id" name="'.$vars['product']['price_id'].'" type="button">Заказать</button></noindex>
+                             <div class="status_product expected">'.$vars['product']['brend'].'</div>';	
+                    }
+    
+                    echo $vars['rating'];
+                    //if($vars['product']['brend']!='')echo'<div class="stock" id="stock'.$vars['product']['brend_id'].'">'.$vars['product']['brend'].'</div>';     
+                ?>
+                    
+                </div>
+            </div>
+
+			<br class="clear" />
+
+        </div>
+        
+        <div class="clear"></div>
+        <div id="tabs">
+            <ul id="tabs_ul">
+                <li onclick="showTab('Featured')" class="hov_tab">Информация</li>
+                <li onclick="showTab('Featured2')">Характеристики</li>
+                <li onclick="showTab('Video')">Фото / Видео</li>
+            </ul>
+            <br class="clear" />
+
+            <div id="Featured" class="div_tab hov_tab"><?=htmlspecialchars_decode($vars['product']['body'])?></div>
+            <div id="Featured2" class="div_tab">
+                <?=htmlspecialchars_decode($vars['product']['body2'])?>
+            </div>
+            <div id="Video" class="div_tab"><?=htmlspecialchars_decode($vars['product']['body3'])?></div>
+            <div class="clear"></div>
+        </div>
+        <?	
+            if(isset($vars['other'][0]))
+            {
+				if(isset($vars['other'][4]))
+				{
+					echo'<script type="text/javascript">
+							jQuery(document).ready(function(){
+								jQuery("#mycarousel2").jcarousel({
+										auto: 3,
+										autoPlay:2000,
+										scrollAfterAmount:3,
+										scrollInc:3,
+										wrap: "circular",
+										scroll:1,
+										initCallback: mycarousel_initCallback
+									});
+							});
+							</script>';	
+				}
+                echo'<div class="title_other">'.$vars['translate']['other_product'].'</div>
+					 <div class="product_block">
+					 	<ul id="mycarousel2" class="jcarousel jcarousel-skin-tango">';
+                $i=0;
+                foreach($vars['other'] as $row)
+                {
+                    echo'<li>';
+					include "product.phtml";
+					echo'</li>';
+					$i++;
+                }
+                echo'</ul><div class="clear"></div></div>';
+            }
+        ?> 
+</div>

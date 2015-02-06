@@ -1,0 +1,59 @@
+<?php
+    if(isset($vars['news']))
+    {
+    	echo'<h2 class="title">'.$vars['translate']['news'].'</h2>';
+		
+		echo'<h1 style="font-size:18px; margin-top:0;">'.$vars['news']['name'].'</h1>
+			 <a href="/'.str_replace('_s','',$vars['news']['photo']).'" rel="lightbox"><img src="/'.$vars['news']['photo'].'" style="float:left; margin:0 10px 0 0;" /></a>
+			 
+			 '.htmlspecialchars_decode($vars['news']['body']);
+			  
+		echo'<div class="clear"></div><br /><a href="'.LINK.'/news/all" class="return_link"><span></span>'.$vars['translate']['all_news'].'</a>';
+       
+		//echo $vars['comments'];
+		if(count($vars['other'])!=0)
+		{
+			$i=0;
+			echo'<div class="clear"></div><br /><div class="title">'.$vars['translate']['last_news'].'</div><div class="news">';
+			foreach($vars['other'] as $row)
+			{
+				$style='';
+				if($i==2)
+				{
+					$style=' style="margin-right:0;"';
+					$i=-1;
+				}
+				echo'<div class="news_block"'.$style.'>
+						<a href="'.LINK.'/news/'.$row['url'].'" class="news_title">'.$row['name'].'</a>
+						<a href="'.LINK.'/news/'.$row['url'].'"><img src="/'.$row['photo'].'" /><span class="border_cat"></span></a>
+						<div class="clear"></div>
+					 </div>';
+				$i++;
+			}
+			echo"</div><br />";
+		}
+    }
+    else{
+        echo'<h1 class="title">'.$vars['translate']['news'].'</h1>';
+        echo'<div class="news">';
+		$i=0;
+        foreach($vars['list']['list'] as $row)
+        {
+            $style='';
+			if($i==2)
+			{
+				$style=' style="margin-right:0;"';
+				$i=-1;
+			}
+			echo'<div class="news_block"'.$style.'>
+                    <div class="date">'.Date::date_view($row['date'], "dd MM YY").'</div>
+					<a href="'.LINK.'/news/'.$row['url'].'"><img src="/'.$row['photo'].'" /></a>
+					<a href="'.LINK.'/news/'.$row['url'].'" class="news_title">'.$row['name'].'</a>
+					<div class="clear"></div>
+				 </div>';
+			$i++;
+        }
+        echo"</div>";
+        echo $vars['list']['paging'];
+    }
+?>

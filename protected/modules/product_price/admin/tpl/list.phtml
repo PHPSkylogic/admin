@@ -1,0 +1,99 @@
+<div class="cm-notification-container"></div>
+<div id="message"><?=$vars['message']?></div>
+<div>
+	<div class="clear mainbox-title-container">
+		<h1 class="mainbox-title float-left"><?=$vars['name']?></h1>
+	</div>
+	</div>
+	<div class="mainbox-body">
+		<div id="ds_15014" class="clear">
+        <div class="section-border">
+        <form class="cm-disable-empty " method="POST" name="search_form" action="/admin/product_price">
+        
+        <table cellspacing="0" border="0" class="search-header">
+            <tr>
+                <td class="nowrap search-field">
+                    <label>Тип цен:</label>
+                    <div class="break">
+                        <select name="price_type" style="width:200px">
+                            <option value="0">Все типы цен</option>
+                            <?php
+                            foreach($vars['price_type'] as $row)
+                            {
+                                echo"<option value='{$row['id']}'>{$row['name']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </td>
+				<td class="nowrap search-field">
+                    <label>Каталог:</label>
+                    <div class="break">
+                        <select name="cat_id" style="width:200px">
+                            <option value="0">Все товары</option>
+                            <?php
+                            foreach($vars['catalog'] as $row)
+                            {
+                                if($row['sub']==0)
+                                {
+                                    echo"<option value='{$row['id']}'>{$row['name']}</option>";
+                                    foreach($vars['catalog'] as $row2)
+                                    {
+                                        if($row['id']==$row2['sub'])
+                                        {
+                                            echo"<option value='{$row2['id']}'>&nbsp;&nbsp;&nbsp;{$row2['name']}</option>";
+                                            foreach($vars['catalog'] as $row3)
+                                            {
+                                                if($row2['id']==$row3['sub']&&$vars['edit']['id']!=$row3['id'])
+                                                {
+                                                    echo"<option value='{$row3['id']}'>&nbsp;&nbsp;&nbsp; - {$row3['name']}</option>";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </td>
+                <td class="nowrap search-field">
+                    <label>Действие:</label>
+                    <div class="break clear correct-picker-but">
+                        <select name="action" style="width:200px">
+                            <option value="+">+</option>
+                            <option value="-">-</option>
+                            <option value="*">*</option>
+                            <option value="/">/</option>
+                            <option value="+percent">увеличить на %</option>
+                            <option value="-percent">уменьшить на %</option>
+                        </select>
+                    </div>
+                </td>
+                <td class="nowrap search-field">
+                    <label>Значение:</label>
+                    <div class="break">
+                        <input type="text" class="input-text-large" value="" size="1" name="value">
+                    </div>
+                </td>
+                <td class="buttons-container">
+					<span class="submit-button "><input type="submit" value="Пересчитать цены" name="add"></span>
+                </td>
+            </tr>
+            </table>
+        </form>
+		
+        </div>
+		</div>
+		<div id="content_manage_users">
+			<form name="userlist_form" method="post" action="<?=String::getUrl2('delete')?>">
+				<div id="pagination_contents">
+					<?php echo $vars['list'];?>
+				</div> 
+				
+				<input type="hidden" value="<?=$vars['action']?>" id="action" />
+			</form>
+			</div>
+		</div>
+	</div>
+</div>

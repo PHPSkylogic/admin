@@ -1,0 +1,50 @@
+
+<?
+    echo htmlspecialchars_decode($vars['payment_text']['body']);
+	$key='zHjWXgTvcZ66bDfI';
+	$dataSet=array('ik_co_id'=>'545b7381bf4efc5e6202f348',
+					'ik_pm_no'=>$vars['order_id'],
+					'ik_cur'=>'RUB',
+					'ik_am'=>$vars['price'],
+					'ik_desc'=>'Latorta.ru. Кондитерские чудеса начинаются здесь...');
+				
+	ksort($dataSet, SORT_STRING); // сортируем по ключам в алфавитном порядке элементы массива 
+	array_push($dataSet, $key); // добавляем в конец массива "секретный ключ"
+	$signString = implode(':', $dataSet); // конкатенируем значения через символ ":"
+	$sign = base64_encode(md5($signString, true)); // берем MD5 хэш в бинарном виде по 	
+    
+    $style='';
+    if(isset($vars['payment_hidden']))
+    {
+        $style='style="display:none;"';
+        echo'<script type="text/javascript">
+                $(document).ready(function(){
+                    $("#payment_form").submit();
+                });
+                </script>';
+    }
+?>
+<div <?=$style?>>
+<div style="font-weight:bold;">ID заказа: <?=$vars['order_id']?></div>
+<div style="font-weight:bold;">Сумма к оплате: <?=$vars['price']?> RUB</div>
+
+<h3>Оплатить с помощью:</h3>
+
+    <div class="payment_block">
+        <form id="payment_form" name="payment" method="post" action="https://sci.interkassa.com/"accept-charset="UTF-8">
+            <input type="hidden" name="ik_co_id" value="545b7381bf4efc5e6202f348" />
+            <input type="hidden" name="ik_sign" value="<?=$sign?>" />
+            <input type="hidden" name="ik_pm_no" value="<?=$vars['order_id']?>" />
+            <input type="hidden" name="ik_cur" value="RUB" />
+            <input type="hidden"name="ik_am"value="<?=$vars['price']?>" />
+            <input type="hidden" name="ik_desc" value="Latorta.ru. Кондитерские чудеса начинаются здесь..." />
+            <input type="image" src="/images/interkassa_logo.gif" style="background-color:#fff;" />
+        </form>
+    </div>
+    <div class="payment_block">
+        <form id="payment_form2" name="payment2" method="post" action="">
+            <input type="hidden" value="QIWI" name="qiwi_submit" />
+            <input type="image" src="/images/qiwi.jpg" />
+        </form>
+    </div>
+</div>

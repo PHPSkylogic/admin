@@ -1,0 +1,134 @@
+.menu{
+	position:relative;
+
+}
+.sf-menu{
+	display:table;
+	height:31px;
+	max-width:800px;
+}
+.sf-menu, .sf-menu ul{
+	margin:0;
+	padding:0;
+}
+.sf-menu li{
+	list-style-type: none;
+	display:table-cell;
+	vertical-align:middle;
+}
+.sf-menu li:hover, .sf-menu li.cur_menu{
+	
+}
+.sf-menu li.razd{
+	min-width:2px;
+	width:2px;
+	background-image:url(../images/razd.jpg);
+	background-repeat:no-repeat;
+	background-position:left;
+	padding:0 20px 0 0;
+}
+.sf-menu li a{
+    color: #faf4ec; /* text color */
+	font-size: 12px;
+
+    text-decoration: none;
+	display:block;
+	text-align:left;
+	padding:2px 0 3px 0;
+}
+
+.sf-menu li a:hover{
+	text-decoration:underline;
+}
+.sf-menu li li{
+	width:235px;
+	background-image:none;
+	height:auto;
+	
+	float:left;
+	position:relative;
+	border:none;
+	background-image:none;
+}
+.sf-menu li li:hover{
+	background-image:none;
+}
+.sf-menu li.cat_menu li a{
+	font-size:15px;
+	font-weight:bold;
+	text-transform:none;
+	text-align:left;
+	padding:4px 0 4px 30px;
+	background-repeat:no-repeat;
+	background-position:left;
+}
+.sf-menu li.cat_menu li a:hover{
+	color:#eee;	
+}
+.sf-menu ul{
+	position:absolute;
+	z-index:10;
+	top:-999em;
+	background-color:#ea5e2b;
+	border-bottom:5px solid #f1a20a;
+	margin:41px 0 0 0;
+	width:714px;
+	padding:15px 0 10px 20px;
+}
+.div_menu{
+	width:250px;
+	display:table-cell;
+	vertical-align:top;	
+}
+#menu_shadow{
+	position:absolute;
+	z-index:11;
+}
+.sf-menu li:hover{
+	visibility:inherit;
+}
+.sf-menu a.sf-with-ul {
+	padding-right:2.25em;
+	min-width:1px; 
+}
+.sf-sub-indicator {
+	position:absolute;
+	display:block;
+	right:.75em;
+	top:1.05em; /* IE6 only */
+	width:10px;
+	height:10px;
+	text-indent:-999em;
+	overflow:hidden;
+}
+a > .sf-sub-indicator {  
+	top:.8em;
+	background-position: 0 -100px; 
+}
+.sf-menu li:hover ul,
+.sf-menu li.sfHover ul{
+	display:block;
+	top:0;
+}
+ul.sf-menu li:hover li:hover ul,
+ul.sf-menu li.sfHover li:hover ul{
+	display:block;
+}
+ul.sf-menu li:hover li ul,
+ul.sf-menu li.sfHover li ul{
+	display:none;
+}
+ul.sf-menu li li:hover ul,
+ul.sf-menu li li.sfHover ul{
+	left:18em;
+	
+}
+ul.sf-menu li li:hover li ul,
+ul.sf-menu li li.sfHover li ul {
+	top:-999em;
+}
+ul.sf-menu li li li:hover ul,
+ul.sf-menu li li li.sfHover ul {
+	left:10em; 
+	top:0;
+}

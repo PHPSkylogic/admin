@@ -1,0 +1,39 @@
+<?
+    if(!isset($vars['days']))
+    {
+        echo'<div class="test_overlay"></div>';
+        $title='<p style="margin-top:15px;">Тестирование закончилось</p>';
+    }
+    else $title='<p>Тестирование закончится через <br/>
+        <span id="time-end">'.$vars['days'].'д. '.$vars['hours'].'ч. '.$vars['minutes'].'м.</span></p>';
+?>
+<div id="testing-line"></div>
+<div id="testing">
+    <div id="testing-main">
+    <?php echo $title;?>
+    </div>
+    <div id="testing-mail-block">
+        <a href="#" id="send-mail">
+            <img src="/images/testing_mail_icon.png" alt="" />
+        </a>
+    </div>
+    <div id="send-report">
+        <h3>Отправить сообщение</h3>
+
+        <label>Текущий адрес сайта:</label><br/>
+        <input type="text" id="test-url" value="" disabled /><br/>
+
+        <label>Тема сообщения:</label><br/>
+        <input type="text" id="test-subject" placeholder="укажите тему" value="" /><br/>
+
+        <label>Суть сообщения:</label><br/>
+        <textarea id="test-text" placeholder="укажите суть" ></textarea>
+        <div class="clear"></div>
+
+        <input type="hidden" id="test-img" />
+
+        <button id="testing-send">Отправить</button>
+    </div>
+</div>
+
+

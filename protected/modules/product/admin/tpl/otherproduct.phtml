@@ -1,0 +1,24 @@
+    <table width="750" cellspacing="0" cellpadding="0" border="0" class="table table-fixed hidden-inputs tb_sort" style="margin:20px 0 0 15px;">
+        <tr>
+            <th width="20">ID</th>
+            <th width="50">Фото</th>
+            <th>Название</th>
+            <th width="80">&nbsp;</th>
+        </tr>
+        <?php
+        foreach($vars['product'] as $row)
+        {
+            $dir=Dir::createDir($row['product_id2']);
+            echo'<tr>
+					<td><span>'.$row['product_id2'].'</span></td>
+					<td><img src="/'.$dir['0'].$row['product_id2'].'_s.jpg" alt="" width="50" /></td>
+					<td>'.$row['name'].' ('.$row['code'].')</td>
+					<td width="10%">
+						<ul class="cm-tools-list tools-list">
+							<li><a href="'.$row['product_id2'].'" class="cm-confirm delother">Удалить</a></li>
+						</ul>
+					</td>
+				</tr>';
+        }
+        ?>
+    </table>

@@ -1,0 +1,37 @@
+<div class="menu">
+    <ul class="sf-menu">
+    <?
+        $i=0;
+        $cnt=count($vars['menu'])-1;
+        foreach($vars['menu'] as $row)
+        {
+            $pos = strpos($row['url'], "http://");
+            if($pos !== false)$link=$row['url'].'" target="_blank" rel="nofollow';
+            elseif($row['url']=="/")$link=LINK."/";
+            else $link=LINK."/".$row['url'];
+
+            $class='';
+            if($_SERVER['REQUEST_URI']==$link)$class='cur_menu';
+            echo '<li class="'.$class.'"><a href="'.$link.'">'.$row['name'].'</a>';
+
+            echo'</li>';
+            if($cnt!=$i)echo'<li class="razd"></li>';
+            $i++;
+        }
+    ?>
+    </ul>
+    <div id="login">
+       <?
+            if(!isset($_SESSION['user_id']))
+            {
+                echo'<a href="#login_form" data-toggle="modal"> '.$vars['translate']['enter'].'</a><span>/</span>
+                     <a href="'.LINK.'/users/sign-up" class="reg">'.$vars['translate']['sign_up'].'</a>';
+            }
+            else
+            {
+                echo '<a href="'.LINK.'/users/orders">'.$vars['translate']['cabinet'].'</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <a href="'.LINK.'/users/logout">Выйти</a>';
+            }
+        ?>
+    </div>
+</div>

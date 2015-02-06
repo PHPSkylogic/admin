@@ -1,0 +1,11 @@
+<?
+	if($vars['settings']['type_basket']==1)$link='href="javascript:void(0);" onclick="showBasket();"';
+	else $link='href="'.LINK.'/orders/all"';
+	
+	echo $vars['translate']['in_cart'];
+	
+	if($vars['count']==0)
+		echo '<div id="check_total" style="font-size:12px;">'.$vars['translate']['cart_empty'].'</div>';
+	else
+		echo '<div id="check_total">'.$vars['total'].'<a '.$link.'>'.$vars['translate']['to_order'].'</a></div>';
+?>

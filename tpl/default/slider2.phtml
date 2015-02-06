@@ -1,0 +1,77 @@
+<script type="text/javascript">
+jQuery(document).ready(function(){
+    jQuery('#mycarousel_v1,#mycarousel_v2,#mycarousel_v3').jcarousel({
+		auto: 0,
+		autoPlay:2000,
+		scrollAfterAmount:1,
+		scrollInc:1,
+		wrap: 'circular',
+		scroll:1,
+		
+		initCallback: mycarousel_initCallback
+	});
+});
+</script>
+<?
+if(isset($vars['hit'][0]))
+{
+
+	echo'<h3 class="title">'.$vars['status']['hit']['name'].'</h3>
+    <div class="product_block">
+	<ul id="mycarousel_v1" class="jcarousel jcarousel-skin-tango">';
+
+		$i=0;
+        foreach($vars['hit'] as $row)
+        {
+            echo'<li>';
+            include "product.phtml";
+            echo'</li>';
+
+            $i++;
+        }
+		echo'</ul>
+    </div>';
+}
+
+if(isset($vars['novelty'][0]))
+{
+	echo'<h3 class="title">'.$vars['status']['novelty']['name'].'</h3>
+    <div class="product_block">
+    <ul id="mycarousel_v2" class="jcarousel jcarousel-skin-tango">';
+
+		$i=0;
+        foreach($vars['novelty'] as $row)
+        {
+            echo'<li>';
+            include "product.phtml";
+            echo'</li>';
+
+            $i++;
+        }
+		echo'</ul>
+    </div>';
+
+}
+if(isset($vars['action'][0]))
+{
+
+	echo'<h3 class="title">'.$vars['status']['action']['name'].'</h3>
+    <div class="product_block">
+    <ul id="mycarousel_v3" class="jcarousel jcarousel-skin-tango">';
+
+		$i=0;
+        foreach($vars['action'] as $row)
+        {
+            echo'<li>';
+            include "product.phtml";
+            echo'</li>';
+
+            $i++;
+        }
+		echo'</ul>
+    </div>';
+}
+?>
+
+
+<div class="clear"></div>

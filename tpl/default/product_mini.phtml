@@ -1,0 +1,21 @@
+<?
+	if(file_exists($row['photo']))$src='<img alt="'.$row['name'].'" title="'.$row['name'].'" src="/'.$row['photo'].'" />';
+	else $src='<img alt="" src="/files/default.jpg" />';
+	
+	$price=Numeric::viewPrice($row['price'], $row['discount']);
+	
+	if(file_exists(substr(IMAGES,1).'status'.$row['status_id'].'.png'))$status='<img src="'.IMAGES.'status'.$row['status_id'].'.png" class="status" />';
+	else $status='';		
+?>
+    <div class="product_mini">
+		<div class="photo_product">
+			<a href="<?=LINK?>/product/<?=$row['url']?>" title="<?=$row['name']?>"><?=$src?><span class="border_cat"></span></a>
+            
+		</div>		
+		<div class="info_product">
+			<div class="name_product"><a href="<?=LINK?>/product/<?=$row['url']?>" title="<?=$row['name']?>"><?=$row['name']?></a></div>
+            <div class="prod_price"><?=$price['price'];?> <?=$price['old_price'];?></div>
+			
+		</div>
+        <div class="clear"></div>
+	</div>

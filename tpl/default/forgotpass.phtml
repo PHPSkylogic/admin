@@ -1,0 +1,35 @@
+<script type="text/javascript">	
+$(document).ready(function() {
+  $("#formID").validationEngine()
+});
+</script>
+<h1><?=$vars['translate']['reset_pass']?></h1>
+<div class="auth">
+	<?=$vars['message']?>
+<?
+if(!isset($vars['send']))
+{
+?>
+   <form method="post" id="formID">
+        <label for="email" style="width:200px;"><?=$vars['translate']['enter_email']?></label>
+        <table>
+        <tr>
+        <td><input type="text" style="width:250px;" name="email" id="email" class="validate[required,custom[email]]" /></td>
+        <td><input type="submit" value="<?=$vars['translate']['send_message']?>" class="submit" /></td>
+        </tr>
+        
+        <tr>
+        <td colspan="2" align="left">
+        	
+            <table><tr>
+            <td style="padding-right:10px;"><img src="/captcha" alt="#Enable images to see captcha." /></td>
+            <td><input type="text" name="f_captcha2" id="f_captcha2" class="validate[required,ajax[ajaxName]]" style="width:113px;" <? if(isset($_POST['f_captcha2']))echo'value="'.$_POST['f_captcha2'].'"';?> /></td>
+            <tr></table>
+        </td>
+        </tr>
+        </table>
+   </form>
+</div>    
+<?
+}
+?>

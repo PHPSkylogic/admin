@@ -1,0 +1,48 @@
+<h1 class="title2">Сравнение</h1>
+<div id="compare_page">
+	
+<?php
+
+   if(isset($vars['params']))
+   {
+	    $width=(count($vars['product'])*247)+247;
+		echo'<div style="width:'.$width.'px;">';
+        $i=0;
+		$compare='';
+		
+		$class_product='product2';
+		$cnt=4;
+		echo'<div class="product"><a href="'.LINK.'/catalog/'.$vars['product'][0]['cat_url'].'" class="add_from_cat">Добавить товар из каталога</a></div>';
+		foreach($vars['product'] as $row)
+		{
+			$del_compare='<a href="/compare/all/del/'.$row['compare_id'].'"><img src="/images/del5.png" alt="" class="del_compare2" title="Удалить" /></a>';
+			include "product.phtml";
+			
+			$params='';
+			$params_parent='';
+			foreach($vars['params_parent'] as $row_p)
+			{
+				$name='-';
+				foreach($vars['params'] as $row2)
+				{
+					if($row['id']==$row2['product_id']&&$row_p['id']==$row2['parent_id'])
+					{
+						$name=$row2['name'];
+						break;
+					}
+				}
+				$params.='<tr><td>'.$name.'</td></tr>';
+				$params_parent.='<tr><td>'.$row_p['name'].'</td></tr>';
+			}
+			$compare.='<div class="compare_tb"><table>'.$params.'</table></div>';
+			$i++;
+		}
+		echo'<div class="clear"></div>';
+		echo'<div class="compare_tb"><table class="params_parent">'.$params_parent.'</table></div>';
+		echo $compare;
+		echo'</div>';
+    }
+	else echo'<div class="message">В таблице сравнений пусто</div>';
+?>
+</div>
+<div class="clear"></div>

@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <title><?php echo $vars['meta']['title'];?></title>
+		<meta name="keywords" content="<?php echo $vars['meta']['keywords']; ?>" />
+		<meta name="description" content="<?php echo $vars['meta']['description']; ?>" />
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="copyright" content="" />
+		<meta name="Author-Corporate" content="" />
+		<meta name="Publisher-Email" content="" />
+        <link href='http://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
+        <?
+            echo $vars['webmaster'];
+        	
+			if(file_exists('favicon.ico'))echo'<link rel="shortcut icon" href="/favicon.ico?'.time().'" type="image/x-icon" />';
+			
+			echo $vars['styles'];  
+			echo '<!--[if IE]>'.$this->LoadResource('styles', 'style_ie.css').'<![endif]-->'; 
+			
+			echo $vars['scripts'];
+			
+			if(isset($vars['google']))
+			{
+				echo"<script type=\"text/javascript\">";
+				if(!isset($vars['uni_analytics']))
+				{
+					echo"
+						  var _gaq = _gaq || [];
+						  _gaq.push(['_setAccount', '".$vars['google']."']);
+						  _gaq.push (['_addOrganic', 'yandex.ru', 'query']);
+						  _gaq.push (['_addOrganic', 'images.yandex.ru', 'text']);
+						  _gaq.push (['_addOrganic', 'blogs.yandex.ru', 'text']);
+						  _gaq.push (['_addOrganic', 'video.yandex.ru', 'text']);
+						  _gaq.push (['_addOrganic', 'mail.ru', 'q']);
+						  _gaq.push (['_addOrganic', 'go.mail.ru', 'q']);
+						  _gaq.push (['_addOrganic', 'google.com.ua', 'q']);
+						  _gaq.push (['_addOrganic', 'images.google.ru', 'q']);
+						  _gaq.push (['_addOrganic', 'maps.google.ru', 'q']);
+						  _gaq.push (['_addOrganic', 'rambler.ru', 'words']);
+						  _gaq.push (['_addOrganic', 'nova.rambler.ru', 'query']);
+						  _gaq.push (['_addOrganic', 'nova.rambler.ru', 'words']);
+						  _gaq.push (['_addOrganic', 'gogo.ru', 'q']);
+						  _gaq.push (['_addOrganic', 'nigma.ru', 's']);
+						  _gaq.push (['_addOrganic', 'search.qip.ru', 'query']);
+						  _gaq.push (['_addOrganic', 'webalta.ru', 'q']);
+						  _gaq.push (['_addOrganic', 'sm.aport.ru', 'r']);
+						  _gaq.push (['_addOrganic', 'meta.ua', 'q']);
+						  _gaq.push (['_addOrganic', 'search.bigmir.net', 'z']);
+						  _gaq.push (['_addOrganic', 'search.i.ua', 'q']);
+						  _gaq.push (['_addOrganic', 'index.online.ua', 'q']);
+						  _gaq.push (['_addOrganic', 'web20.a.ua', 'query']);
+						  _gaq.push (['_addOrganic', 'search.ukr.net', 'search_query']);
+						  _gaq.push (['_addOrganic', 'search.com.ua', 'q']);
+						  _gaq.push (['_addOrganic', 'search.ua', 'q']);
+						  _gaq.push (['_addOrganic', 'poisk.ru', 'text']);
+						  _gaq.push (['_addOrganic', 'go.km.ru', 'sq']);
+						  _gaq.push (['_addOrganic', 'liveinternet.ru', 'ask']);
+						  _gaq.push (['_addOrganic', 'gde.ru', 'keywords']);
+						  _gaq.push (['_addOrganic', 'affiliates.quintura.com', 'request']);
+						  _gaq.push (['_addOrganic', 'akavita.by', 'z']);
+						  _gaq.push (['_addOrganic', 'search.tut.by', 'query']);
+						  _gaq.push (['_addOrganic', 'all.by', 'query']);
+						  _gaq.push(['_trackPageview']);
+						  _gaq.push(['_trackPageLoadTime']);
+						
+						  (function() {
+							var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+							ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+							var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+						  })();
+						  
+						  ";
+					  
+				}
+				else{
+					echo"(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+							(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+							m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+							})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+							
+							ga('create', '".$vars['google']."', '".$_SERVER['HTTP_HOST']."');
+							ga('send', 'pageview');";
+					if(isset($vars['uni_analytics_code']))echo $vars['uni_analytics_code'];	
+				}
+				echo"</script>";
+			}
+		?>
+	</head>
+<body class="<? if(isset($vars['left_menu']))echo $_SESSION['sort_view'];elseif($vars['topic']=='compare')echo'sort_table_rubber';?>">
+<?
+	include"cart_popup.phtml";
+	include"callbacks.phtml";
+	include"inform.phtml";
+	if(isset($vars['sign_in']))echo $vars['sign_in'];
+	if(isset($vars['feedback']))echo $vars['feedback'];
+$text='Даже если бы от тебя осталась только твоя улыбка, ты всё равно был бы для меня лучшим из мужчин<br><br>© Казино „Рояль“';
+$text=preg_replace("/^\[[a-z0-9|]*/i", "", $text);
+        $text = str_replace('<br>', "----", $text);
+        $text = str_replace('<br />', "----", $text);
+        $text = str_replace('<br >', "----", $text);
+        $text = str_replace('<br/>', "----", $text);
+        $text = preg_replace ("/[^a-zа-я0-9.,:?!—()-\s\xD0\x81]/ui","",$text);
+        $text = str_replace('----', "\n", $text);echo $text;
+?>
+<a href="#wrapper" id="top-link"><img src="<?=IMAGES?>up.png" /></a>
+<div id="wrapper">
+    <div class="content">
+        <?php echo $vars['menu'];?>
+        <div id="header">
+            <div class="tb_h">
+                <div id="logo">
+                    <a href="<?=LINK?>/"><img src="<?=IMAGES?>logo.png" alt="" /></a>
+                </div>
+                <div class="top_phone">
+                    <div class="top_phone_in"><?=htmlspecialchars_decode($vars['info_blocks']['2'])?></div>
+                    <div id="search_block">
+
+                        <form method="post" action="/catalog/search">
+                            <input type="text" id="search_query_top" autocomplete="off" name="search" value="<? if(isset($_SESSION['search']))echo $_SESSION['search']?>" placeholder="Искать..." />
+                            <input type="image" src="<?=IMAGES?>search_icon.png" />
+                        </form>
+                        <div id="results_search"></div>
+                    </div>
+                </div>
+                <div id="basket_block2">
+                    <div id="basket_block"></div>
+                    <!--<a href="#callbacks" data-toggle="modal" id="callback_link">Обратный звонок</a>-->
+                </div>
+             </div>
+        </div>
+
+        <div class="clear"></div>        
+        <div id="content_body">
+			<?php
+				echo $vars['cat_menu'];
+				if(isset($vars['breadcrumbs']))echo $vars['breadcrumbs'];
+                if(isset($vars['message'])&&$vars['message']!='')
+				{
+					echo'<script>$.stickr({note: "'.strip_tags($vars['message']).'", className: "next", position: {right:"42%",bottom:"60%"}, time: 4000, speed: 300});</script>';
+				}
+
+				echo $vars['content'];
+
+                if(isset($vars['recomand']))echo $vars['recomand'];
+				//////////meta data
+				if(isset($vars['meta']['text']))
+				{
+					if($vars['meta']['excerpt']!='')
+					{
+						//EXCERPT
+						echo'<div id="exc_seo" class="bot_text">'.htmlspecialchars_decode($vars['meta']['excerpt']).'<a href="#" onclick="document.getElementById(\'seo_div\').style.display = \'block\'; document.getElementById(\'exc_seo\').style.display = \'none\'; return false;" >'.$vars['translate']['read_more'].'</a></div>';
+						//FULLTEXT
+						echo'<div id="seo_div" class="bot_text" style="display: none;">'.htmlspecialchars_decode($vars['meta']['text']).'<a href="#" onclick="document.getElementById(\'seo_div\').style.display = \'none\'; document.getElementById(\'exc_seo\').style.display = \'block\'; return false;" >'.$vars['translate']['turn'].'</a></div>';
+					}
+					else echo'<div id="seo_div" class="bot_text">'.htmlspecialchars_decode($vars['meta']['text']).'</div>';
+            	}
+            ?>
+            <div class="clear"></div>
+        </div>
+       
+    	<div id="footer">
+            <div class="subscribe_block">
+                <div class="left">
+                    <? echo htmlspecialchars_decode($vars['info_blocks']['1']);?>
+                </div>
+                <form id="subscribe_form">
+                    <h4 align="left"><?=$vars['translate']['mailer2']?></h4>
+                    <input type="text" name="subscribe-email" id="subscribe-email" value="" placeholder="<?=$vars['translate']['your_email']?>" />
+                    <input type="submit" value="Подписаться" />
+                </form>
+            </div>
+            <div class="footer_tb">
+                <div class="footer_left" style="margin-top:50px;">
+                    <?=$vars['translate']['copyright']?>
+                </div> 
+                <div class="footer_right" style="margin-top:50px;">
+                    <a href="http://skylogic.com.ua" target="_blank"><img src="<?=IMAGES?>skylogic.jpg" alt="" /></a>
+                </div>  
+            </div> 
+        </div>
+	</div>        
+</div>
+<?php if(isset($vars['testing_mode']))echo $vars['testing_mode'];?>
+</body>
+</html>

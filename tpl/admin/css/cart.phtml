@@ -1,0 +1,211 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#formID").validationEngine();
+    });
+</script>
+    <?php
+    echo '<div class="title">'.$vars['translate']['orders'].'</div>';
+    echo $vars['message'];
+    if(count($vars['product'])!=0&&!isset($vars['send']))
+    {
+        ?>
+        <form method="post" id="update_order" action="">
+            <table width="100%" class="orders2" cellpadding="0" cellspacing="0">
+                 <tr>
+                     <th width="70">Фото</th>
+                     <th style="text-align:left;">Наименование</th>
+                     <th width="100">В упаковке</th>
+                     <th width="150">Кол-во упаковок</th>
+                     <th width="100">Цена</th>
+                     <th width="100">Сумма</th>
+                     <th width="100">Статус</th>
+                     <th width="20"></th>
+                 </tr>
+                <?
+                $i=0;
+                $summa2=0;
+                $summa3=0;
+                $brend_id=$vars['product'][0]['brend_id'];
+                foreach($vars['product'] as $row)
+                {
+                    //if($row['discount']==0)$row['discount']=$vars['discount'];
+                    $price = Numeric::viewPrice($row['price'], $row['discount']);
+                    $summa = Numeric::formatPrice($price['cur_price']*$row['amount']);
+
+                    if($row['brend_id']==1)$summa2+=$price['cur_price']*$row['amount'];
+                    else $summa3+=$price['cur_price']*$row['amount'];
+
+                    if($row['photo_basket']!=''&&file_exists($row['photo_basket']))
+                    {
+                        $src='<img alt="'.$row['name'].'" title="'.$row['name'].'" src="/'.$row['photo_basket'].'" class="cart_img" />';
+                    }
+                    elseif(file_exists($row['photo']))
+                    {
+                        $src='<img alt="'.$row['name'].'" title="'.$row['name'].'" src="/'.$row['photo'].'" class="cart_img" />';
+                    }
+                    else $src='<img alt="" src="/files/default.jpg" class="cart_img" />';
+
+                    $style='';
+                    if($brend_id!=$row['brend_id'])
+                    {
+                        $style='class="border_bottom"';
+                        $brend_id=$row['brend_id'];
+                    }
+                    echo"
+				<tr {$style}>
+					<td><a href='".LINK."/product/{$row['url']}'>$src</a></td>
+					<td style='text-align:left;'><a href='".LINK."/product/{$row['url']}'>{$row['name']}</a></td>
+					<td>{$row['stock']}</td>
+					<td>
+						<div class='productin-count'>
+							<a href='javascript:void(0);' class='countchange cnt-down' rel='cnt{$i}'>&nbsp;</a>
+							<input type='text' id='cnt{$i}' value='{$row['amount']}' max='1000' class='amount' name='amount[]' />
+							<a href='javascript:void(0);' class='countchange cnt-up' rel='cnt{$i}'>&nbsp;</a>
+						</div>
+
+						<input type='hidden' value='{$row['cart_id']}' name='id[]' />
+					</td>
+					<td class='price'>
+						{$price['price']} <span>{$price['old_price']}</span>
+					</td>
+					<td class='price'>
+						{$summa}
+					</td>
+					<td><span class='cart_status{$row['brend_id']}'>{$row['status']}</span></td>
+					<td><a href='".LINK."/orders/all/del/{$row['cart_id']}' title='".$vars['translate']['delete']."'><img src='/images/del_r.png' /></a></td>
+				</tr>";
+                    $i++;
+                }
+
+           ?>
+                <tr style="background-color:transparent; border-top:2px solid #247cae;" id="">
+                    <td style="text-align:left; padding:10px 30px; border-top:2px solid #247cae;" colspan="3" valign="top">
+                        <a href="<?=$_SESSION['catalog_contin']?>" class="contin"><?=$vars['translate']['continue_shopping']?></a>
+                    </td>
+                    <td colspan="5"  valign="top" class="total_cart" style="padding:10px 18px; border-top:2px solid #247cae;">
+                        <div class="total_cart" id="total_cart">
+                            <?
+                                if($summa3!=0)
+                                {
+                                    if($summa2>0)echo '<div class="total_d3">Сумма за товар вналичии: <b>'.Numeric::formatPrice($summa2).'</b></div>';
+                                    echo '<div class="total_d3">Сумма за товар под заказ: <b>'.Numeric::formatPrice($summa3).'</b></div>';
+                                    $summa2+=$summa3;
+                                }
+                                echo '<div class="total_d2">Общая сумма: <span class="total_d">'.Numeric::formatPrice($summa2).'</span></div>';
+                            ?>
+
+                        </div>
+                        <div id="deliver_price"></div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+<div id="tabs" class="tabs_cart" style="margin: 50px 30px;">
+    <ul id="tabs_ul">
+        <?
+        if(!isset($_SESSION['user_id']))
+            echo'<li onclick="showTab(\'new_user\')" class="hov_tab left_but">Новый пользователь</li>
+                     <li onclick="showTab(\'auth_user\')" class="left_but">Я уже зарегистрирован</li>';
+        else
+            echo'<li onclick="showTab(\'new_user\')" class="hov_tab left_but">Ваши данные</li>';
+        ?>
+    </ul>
+    <div class="clear"></div>
+
+    <div id="new_user" class="hov_tab div_tab">
+        <div id="sign_up" style="width:679px; margin:20px 50px;">
+            <form action="/orders/all/send" method="post" id="formID">
+                <input type="hidden" name="report" value="" />
+                <table>
+                    <tr>
+                        <td style="padding-right:137px;" valign="top">
+
+                            <label for="name_save"><?=$vars['translate']['fio']?> *:</label>
+                            <input type="text" name="name_sign" size="30" id="name_save" class="validate[required]" value="<? if(isset($vars['user_info']['name']))echo $vars['user_info']['name']?>" />
+
+                            <label for="email_save"><?=$vars['translate']['email']?> *:</label>
+                            <input type="text" name="email_sign" size="30" id="email_save" class="validate[required,custom[email]]" value="<? if(isset($vars['user_info']['email']))echo $vars['user_info']['email']?>" />
+
+
+                            <label for="phone_save" style="width:200px;"><?=$vars['translate']['phone']?> *:</label>
+                            <input type="text" name="phone_sign" size="30" id="phone_save" class="validate[required]" value="<? if(isset($vars['user_info']['phone']))echo $vars['user_info']['phone']?>" />
+
+                            <label for="address"><?=$vars['translate']['address']?>:</label>
+                            <input type="text" name="address_sign" size="30" id="address" value="<? if(isset($vars['user_info']['address']))echo $vars['user_info']['address']?>" />
+
+
+                        </td>
+                        <td valign="top">
+                            <label for="city"><?=$vars['translate']['city']?>:</label>
+                            <input type="text" name="city_sign" size="30" id="city" value="<? if(isset($vars['user_info']['city']))echo $vars['user_info']['city']?>" />
+
+                            <?
+                            if(isset($vars['delivery'])&&count($vars['delivery'])!=0)
+                            {
+                                echo'<label for="delivery">'.$vars['translate']['delivery'].':</label><select name="delivery" id="delivery">
+						<option value=""></option>';
+                                foreach($vars['delivery'] as $row)
+                                {
+                                    $price='';
+                                    if($row['price']!=0.00)
+                                    {
+                                        $price = Numeric::viewPrice($row['price']);
+                                        $price=" +".$price['price'];
+                                    }
+                                    echo'<option value="'.$row['id'].'"';if(false)echo' selected';echo'>'.$row['name'].' '.$price.'</option>';
+                                }
+                                echo'</select>';
+                            }
+                            if(isset($vars['payment'])&&count($vars['payment'])!=0)
+                            {
+                                echo'<label for="delivery">'.$vars['translate']['payment'].':</label><select name="payment" id="payment">
+						<option value=""></option>';
+                                foreach($vars['payment'] as $row)
+                                {
+                                    echo'<option value="'.$row['id'].'"';if(false)echo' selected';echo'>'.$row['name'].'</option>';
+                                }
+                                echo'</select>';
+                            }
+                            ?>
+                            <label for="captcha" style="width:200px;"><?=$vars['translate']['enter_code']?></label>
+                            <img src="/captcha" style="float:left;" /><input type="text" name="captcha" size="30" style="width:105px; margin-left:23px;" id="captcha" value="" class="validate[required,ajax[ajaxName]]" />
+
+
+                        </td>
+                    </tr>
+                </table>
+
+                <label for="comment" style="width:200px;"><?=$vars['translate']['comments_order']?>:</label>
+                <textarea rows="5" cols="45" id="comment" name="text" style="width:661px;"></textarea>
+                <br />
+                <input type="submit" name="order" value="<?=$vars['translate']['to_order']?>" class="submit" style="margin:15px auto; display:block;" />
+            </form>
+        </div>
+    </div>
+    <div id="auth_user" class="div_tab">
+        <div id="message_auth2"></div>
+        <form action="" method="post" onsubmit="return auth_check2();" id="form_auth">
+
+            <label for="sname_save"><?=$vars['translate']['email']?> *:</label>
+            <input type="text" name="email_auth" size="30" id="email_auth2" class="validate[required,custom[email]]" value="<? if(isset($_POST['email_auth']))echo $_POST['email_auth'];?>" />
+            <br />
+
+            <label for="sname_save"><?=$vars['translate']['password']?> *:</label>
+            <input type="password" name="pass_auth" size="30" id="pass_auth2" class="validate[required]" value="<? if(isset($_POST['email_auth']))echo $_POST['email_auth'];?>" />
+
+            <table style="margin-left: 74px;">
+                <tr>
+                    <td><input type="submit" value="<?=$vars['translate']['enter']?>" name="auth" class="submit" /></td>
+                    <td style="padding:10px 0 0 10px;"><a href="<?=LINK?>/users/forgotpass" class="forgot_link"><?=$vars['translate']['forgotpass']?></a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+    <?
+    }
+    else{
+        if($vars['message']=="")echo"<h3 align='center'>".$vars['translate']['cart_empty']."</h3>";
+    }
+    ?>

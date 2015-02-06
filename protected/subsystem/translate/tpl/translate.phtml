@@ -1,0 +1,54 @@
+<div class="cm-notification-container"></div>
+<div id="message"><?=$vars['message']?></div>
+<div>
+	<div class="clear mainbox-title-container">
+		<div class="tools-container"><span class="action-add"> <a href="/admin/<?=$vars['action']?>/subsystem/translate/addsubsystem">Добавить</a> </span> </div>
+		<h1 class="mainbox-title float-left">Интерфейс "<?=$vars['modules_name']?>"</h1>
+	</div>
+	</div>
+	<div class="mainbox-body">
+		<div id="ds_15014" class="clear">
+			
+		</div>
+		<div id="content_manage_users">
+			<form name="userlist_form" method="post" action="/admin/<?=$vars['action']?>/subsystem/translate/update">
+            	<input type="checkbox" name="translate_to" value="1" id="translate_to" /> <label for="translate_to">Перевести на текущий язык</label>
+				<div id="pagination_contents">
+                    <div class="items-container multi-level">
+                    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="table table-fixed hidden-inputs tb_sort">
+                        <tr>
+                            <th width="30">ID</th>
+                             <th width="430">Значение</th>
+                            <th width="430">Комментарий</th>
+                        </tr>
+                        <?php
+                            foreach($vars['list'] as $row)
+                            {
+                                echo'<tr>
+										<td><span>'.$row['id'].'</span><input type="hidden" value="'.$row['id'].'" name="save_id[]" /></td>
+										<td><textarea name="value[]" class="input-textarea" style="resize: none; height:17px; width:400px;">'.$row['value'].'</textarea></td>
+										<td><textarea name="comment[]" class="input-textarea" style="resize: none; height:17px; width:400px;">'.$row['comment'].'</textarea></td>
+                                    </tr>';
+                            }
+                        ?>
+                    </table>
+                    </div>                    
+                </div>
+				<div class="buttons-container buttons-bg">
+                <div class="cm-buttons-floating hidden" style="display: block;">
+					<div class="cm-buttons-placeholder">
+						<div class="float-left">
+							<span class="submit-button cm-button-main">
+								<input type="submit" value="Сохранить" name="update" class="">
+							</span>
+						</div>
+					</div>
+					<div class="cm-buttons-floating hidden"></div>
+				</div>
+                </div>
+				<input type="hidden" value="<?=$vars['action']?>" id="action" />
+			</form>
+			</div>
+		</div>
+	</div>
+</div>

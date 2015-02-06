@@ -1,0 +1,26 @@
+<?php
+    if(isset($vars['news']))
+    {
+		echo'<div id="news_block">';
+		echo'<div id="news_title" class="title">'.$vars['translate']['news'].'</div>';
+		$i=0;
+		foreach($vars['news'] as $row)
+		{
+			$style='';
+			if($i==2)
+			{
+				$style=' style="margin-right:0;"';
+				$i=-1;
+			}
+			echo'<div class="news_block"'.$style.'>
+					<div class="date">'.Date::date_view($row['date'], "dd MM YY").'</div>
+					<a href="'.LINK.'/news/'.$row['url'].'"><img src="/'.$row['photo'].'" /></a>
+					<a href="'.LINK.'/news/'.$row['url'].'" class="news_title">'.$row['name'].'</a>
+					<div class="clear"></div>
+				 </div>';
+			$i++;
+		}
+		echo '<div class="clear"></div><a href="'.LINK.'/news/all" class="all_news">'.$vars['translate']['all_news'].' >></a></div>';
+    }
+?>
+<div class="clear"></div>

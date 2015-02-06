@@ -1,0 +1,64 @@
+<div class="tb_h">
+    <div class="left_col">
+        <?
+        echo '<div class="title" style="font-size:24px;">'.$vars['translate']['cabinet'].'</div>
+                <div class="left_menu" id="sidebar">
+                    <ul>
+                        <li><a href="'.LINK.'/users/orders" class="other_link">'.$vars['translate']['my_orders'].'</a></li>
+                        <li class="hov_left"><a href="'.LINK.'/users" class="other_link">'.$vars['translate']['my_data'].'</a></li>
+                        <li><a href="'.LINK.'/users/logout">'.$vars['translate']['exit'].'</a></li>
+                    </ul>
+                </div>';
+        if(isset($vars['filters']))echo $vars['filters'];
+        ?>
+    </div>
+    <div class="right_col">
+        <div class="title" style="font-size:24px;"><?=$vars['translate']['my_data']?></div>
+        <?php
+            if(isset($vars['message']))echo $vars['message'];
+            if(isset($vars['text']['body']))echo htmlspecialchars_decode($vars['text']['body']);
+        ?>
+        <div id="sign_up" >
+
+
+            <form action="" method="post" id="formID2">
+                <table><tr>
+                    <td valign="top" style="padding:0 35px 0 0;">
+                        <label for="email_save"><?=$vars['translate']['email']?>:</label>
+                        <input type="text" name="email_save" size="30" id="email_save" class="validate[required]" value="<?=$vars['user_info']['email']?>" disabled="disabled" />
+
+                        <label for="old_pass" style="width:200px;"><?=$vars['translate']['old_pass']?> </label>
+                        <input type="password" name="old_pass" size="30" id="old_pass" class="validate[required]" value="" />
+
+                        <label for="new_pass" style="width:200px;"><?=$vars['translate']['new_pass']?>:</label>
+                        <input type="password" name="new_pass" size="30" id="new_pass" class="validate[required]" value="" />
+                    </td>
+                    <td valign="top">
+                        <label for="name_save"><?=$vars['translate']['fio']?>:</label>
+                        <input type="text" name="name_save" size="30" id="name_save" class="validate[required]" value="<?=$vars['user_info']['name']?>" />
+
+                        <label for="phone_save"><?=$vars['translate']['phone']?>:</label>
+                        <input type="text" name="phone_save" size="30" id="phone_save" class="validate[required]" value="<?=$vars['user_info']['phone']?>" />
+
+                        <label for="city"><?=$vars['translate']['city']?>:</label>
+                        <input type="text" name="city" size="30" id="city" class="validate[required]" value="<?=$vars['user_info']['city']?>" />
+
+                        <label for="address"><?=$vars['translate']['address']?>:</label>
+                        <input type="text" name="address" size="30" id="address" value="<?=$vars['user_info']['address']?>" />
+
+                        <label for="code_discount">Промо код:</label>
+                        <input type="text" name="code_discount" size="30" id="code_discount" value="<?=$vars['user_info']['code_discount']?>" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right"><input type="submit" name="save_data" value="<?=$vars['translate']['save']?>" class="submit" /></td>
+                </tr>
+                </table>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+<div class="clear"></div>

@@ -1,0 +1,45 @@
+<div class="title"><?=$vars['translate']['catalog']?></div>
+<div class="left_menu" id="sidebar">
+        <ul>
+		<?
+			if(!isset($vars['curr_parent']))$vars['curr_parent']=0;
+			$menu='';
+			$i=0;
+			$cnt=count($vars['menu'])-1;
+            foreach($vars['menu'] as $row)
+            {
+				if($row['sub']==0)
+				{
+                    $sub = '';
+                    foreach($vars['menu'] as $row2)
+                    {
+                        if($row2['sub']==$row['id'])
+                        {
+                            $pos = strpos($row2['url'], "http://");
+                            if($pos !== false)$link=$row2['url'].'" target="_blank" rel="nofollow';
+                            else $link=LINK."/catalog/".$row2['url'];
+                            $sub.='<li id="licat_'.$row2['id'].'"><a href="'.$link.'">'.$row2['name'].'</a></li>';
+                        }
+                    }
+					
+					$pos = strpos($row['url'], "http://");
+					if($pos !== false)$link=$row['url'].'" target="_blank" rel="nofollow';
+					else $link=LINK."/catalog/".$row['url'];
+					
+					$style='';
+					if($i==$cnt)$style='border-bottom:none;';
+					
+                    if($sub!='')
+					{
+						$menu.='<li id="licat_'.$row['id'].'" class="parent"><a href="'.$link.'" style="'.$style.'">'.$row['name'].'</a>';
+						$menu.='<ul>'.$sub.'</ul>';
+					}
+					else $menu.='<li id="licat_'.$row['id'].'"><a href="'.$link.'" style="'.$style.'">'.$row['name'].'</a>';
+					
+					$i++;
+				}
+            }
+			echo $menu;
+        ?>
+	</ul>
+</div>

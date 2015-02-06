@@ -1,0 +1,43 @@
+<input type="hidden" value="<?=$vars['curr_cat']?>" id="curr_cat">
+<div class="items-container multi-level">
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="table table-fixed hidden-inputs tb_sort">
+        <tr>
+            <th width="50">
+            	Дата
+            </th>
+			<th width="150">
+            	Тип цен
+            </th>
+            <th width="150">
+            	Категория товара
+            </th>
+            <th width="100">
+                Действие
+            </th>
+            <th width="100">
+                Значение
+            </th>
+            <th width="85">
+            	Изменено цен
+            </th>
+            <th width="55">
+                Действие
+            </th>
+        </tr>
+        <?php
+        foreach($vars['list'] as $row)
+        {
+			if($row['price_type']=='')$row['price_type']='Все';
+           echo'<tr>
+					<td><span>'.date("d.m.Y", strtotime($row['date'])).'</span></td>
+					<td><span>'.$row['price_type'].'</span></td>
+					<td><span>'.(($row['catalog_id']!=0)?$vars['catalog'][$row['catalog_id']]:'Все товары').'</span></td>
+                    <td><span>'.$row['action'].'</span></td>
+                    <td><span>'.$row['value'].'</span></td>
+                    <td><span>'.$row['count'].' товаров</span></td>
+                    <td><a href="/admin/'.$vars['action'].'/delete/'.$row['id'].'" class="cm-confirm">Удалить</a></td>
+				</tr>';
+        }
+        ?>
+    </table>
+</div>

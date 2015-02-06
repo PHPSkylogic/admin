@@ -1,0 +1,15 @@
+<div class="title_left">Получили подарок</div>
+<div class="slider-wrapper">
+    <div class="slider" id="slider">
+	<?
+		foreach($vars['list'] as $row)
+		{
+			echo'<div>
+					<a href="/'.str_replace('_s','',$row['photo']).'" rel="lightbox3" title="'.$row['name'].'. '.$row['pname'].'"><img src="/'.$row['photo'].'" /></a><br />
+					'.$row['name'].'<br />
+					<a href="/product/'.$row['url'].'">'.$row['pname'].'</a>
+				 </div>';	
+		}
+	?>
+    </div>
+  </div>

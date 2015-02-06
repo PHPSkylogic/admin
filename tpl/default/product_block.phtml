@@ -1,0 +1,46 @@
+<?
+if(isset($vars['product'][0]))
+{
+?>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('#mycarousel_block').jcarousel({
+            auto: 3,
+            autoPlay:2000,
+            scrollAfterAmount:3,
+            scrollInc:3,
+            wrap: 'circular',
+            scroll:1,
+            initCallback: mycarousel_initCallback
+        });
+
+        <?
+            if(isset($vars['show_video']))
+            {
+                echo"show_video();";
+            }
+        ?>
+
+    });
+</script>
+<div class="clear"></div>
+<div class="title"><?=$vars['title']?></div>
+<div class="product_block2">
+    <div class="product_block">
+        <ul id="mycarousel_block" class="jcarousel jcarousel-skin-tango">
+	<?
+        $i=0;
+        foreach($vars['product'] as $row)
+        {
+            echo'<li>';
+            include "product.phtml";
+            echo'</li>';
+            $i++;
+        }
+    ?>
+        </ul>
+    </div>
+</div>
+<?
+}
+?>

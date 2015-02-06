@@ -1,0 +1,25 @@
+AddDefaultCharset utf-8
+AddType text/x-component .htc
+Options +Includes +FollowSymLinks -Indexes
+DirectoryIndex index.php
+
+RewriteEngine on 
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#RewriteRule ^(.*)$ index.php [L,QSA]
+RewriteRule .*.(txt|csv)$ index.php [R,NC] 
+RewriteRule !((.(js|jpeg|ico|gif|jpg|png|css|swf|cur|flv|pdf|htm|xml|JS|ICO|GIF|JPG|JPEG|PNG|CSS|SWF|CUR|FLV|PDF|htm|HTM|html|HTML|XML|XLXS|xlsx|xls|XLS|doc|DOC|docx|DOCX|TXT|txt|ZIP|zip|rar|RAR|tar|TAR))|connector.php)$ index.php
+<Files ~ "config.ini$">
+deny from all
+</Files>
+
+AddType application/force-download .doc 
+AddType application/force-download .docx 
+AddType application/force-download .zip 
+AddType application/force-download .rar 
+AddType application/force-download .xlsx 
+AddType application/force-download .xls 
+AddType application/force-download .pdf
+AddType application/force-download .flv

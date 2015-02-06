@@ -1,0 +1,48 @@
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('#mycarousel_cat').jcarousel({
+            auto: 0,
+            autoPlay:2000,
+            scrollAfterAmount:1,
+            scrollInc:1,
+            wrap: 'circular',
+            scroll:1,
+
+            initCallback: mycarousel_initCallback
+        });
+    });
+</script>
+<?
+	if(isset($vars['slider']))echo $vars['slider'];
+
+if(isset($vars['catalog'][0]))
+{
+
+    echo'<div class="product_block cat_cont">
+            <ul id="mycarousel_cat" class="jcarousel jcarousel-skin-tango">';
+	$i=0;
+
+
+	foreach($vars['catalog'] as $row)
+	{
+		if($row['sub']==0)
+		{
+			if(file_exists($row['photo']))$src='<img alt="'.$row['name'].'" src="/'.$row['photo'].'" class="photo_cat" title="'.$row['name'].'" alt="'.$row['name'].'" />';
+			else $src='<img alt="" src="/files/default.jpg" class="photo_cat" />';
+			echo'<li><div class="cat_block">
+					<a href="'.LINK.'/catalog/'.$row['url'].'">
+					    '.$src.'
+						<span>'.$row['name'].'</span>
+					</a>
+				 </div></li>';
+			$i++;
+		}
+	}
+    echo'</ul></div>';
+}
+
+    if(isset($vars['slider2']))echo $vars['slider2'];
+	echo '<div class="clear"></div>'.htmlspecialchars_decode($vars['body']['body']);
+
+echo $vars['news'];
+?>

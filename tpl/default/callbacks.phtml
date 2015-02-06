@@ -1,0 +1,15 @@
+<div id="callbacks" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:300px; left:57%;">
+  <form method="post" action="<?=STRING::getUrl3('callbacks');?>callbacks" id="callbacks_form">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    <h3 id="myModalLabel">Обратный звонок</h3>
+  </div>
+  <div class="modal-body" id="cart_content">
+  	<div id="callbacks_message" class="err"></div>
+  	<input type="tel" name="phone_callbacks" value="" placeholder="Ваш телефон" style="width:220px; margin:0 auto 0 19px;" required="required" />
+  </div>
+  <div class="modal-footer">
+    <input type="submit" name="send_callbacks" value="<?=$vars['translate']['send_message']?>" class="submit" />
+  </div>
+  </form>
+</div>

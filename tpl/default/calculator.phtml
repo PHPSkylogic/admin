@@ -1,0 +1,210 @@
+<link type="text/css" href="/calculator/calculator.css" rel="stylesheet" />
+<script src="/calculator/calculator.js" type="text/javascript"></script>
+<div style=" padding:20px 20px 20px 20px">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+    <tr>
+      <td width="50%" rowspan="2"><div class="speedometer" style="margin-bottom:20px"> <img src="/calculator/speedometer.gif" width="224" height="177" alt="км/ч" />
+          <ul id="newSpeed">
+            <li id="speed10">10</li>
+            <li id="speed20">20</li>
+            <li id="speed30">30</li>
+            <li id="speed40">40</li>
+
+            <li id="speed50">50</li>
+            <li id="speed60">60</li>
+            <li id="speed70">70</li>
+            <li id="speed80">80</li>
+            <li id="speed90">90</li>
+            <li id="speed100">100</li>
+
+            <li id="speed110">110</li>
+            <li id="speed120">120</li>
+            <li id="speed130">130</li>
+            <li id="speed140">140</li>
+            <li id="speed150">150</li>
+            <li id="speed160">160</li>
+
+            <li id="speed170">170</li>
+            <li id="speed180">180</li>
+            <li id="speed190">190</li>
+          </ul>
+        </div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="float:left">
+          <tr>
+
+            <td><label for="oldWidth" id="small">Старый типоразмер:</label>
+              <br />
+              <select name="select" class="widthField" id="oldWidth" style="width:70px;">
+                <option value="145">145</option>
+                <option value="155">155</option>
+                <option value="165">165</option>
+                <option value="175" selected="selected">175</option>
+
+                <option value="185">185</option>
+                <option value="195">195</option>
+                <option value="205">205</option>
+                <option value="215">215</option>
+                <option value="225">225</option>
+                <option value="235">235</option>
+
+                <option value="245">245</option>
+                <option value="255">255</option>
+                <option value="265">265</option>
+                <option value="275">275</option>
+                <option value="285">285</option>
+                <option value="295">295</option>
+
+                <option value="305">305</option>
+                <option value="315">315</option>
+                <option value="325">325&nbsp;</option>
+              </select>
+              <span class="slash">/</span>
+              <select name="select2" class="profileField" id="oldProfile" style="width:70px;">
+                <option value="30">30</option>
+
+                <option value="35">35</option>
+                <option value="40">40</option>
+                <option value="45">45</option>
+                <option value="50">50</option>
+                <option value="55">55</option>
+                <option value="60">60</option>
+
+                <option value="65">65</option>
+                <option value="70" selected="selected">70</option>
+                <option value="75">75</option>
+                <option value="80">80</option>
+                <option value="85">85&nbsp;</option>
+              </select>
+				
+             <div style="margin-top:5px;">
+              <span class="r">R</span>
+              <select name="select2" class="radiusField" id="oldDiameter" style="width:70px;">
+                <option value="12">12</option>
+                <option value="13" selected="selected">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22&nbsp;</option>
+
+              </select>
+              </div>
+            </td>
+            <td><label for="newWidth" id="small"><font id="red">Новый типоразмер:</font></label>
+              <br />
+              <select name="select2" class="widthField" id="newWidth" style="width:70px;">
+                <option value="145">145</option>
+                <option value="155">155</option>
+                <option value="165">165</option>
+
+                <option value="175" selected="selected">175</option>
+                <option value="185">185</option>
+                <option value="195">195</option>
+                <option value="205">205</option>
+                <option value="215">215</option>
+                <option value="225">225</option>
+
+                <option value="235">235</option>
+                <option value="245">245</option>
+                <option value="255">255</option>
+                <option value="265">265</option>
+                <option value="275">275</option>
+                <option value="285">285</option>
+
+                <option value="295">295</option>
+                <option value="305">305</option>
+                <option value="315">315</option>
+                <option value="325">325&nbsp;</option>
+              </select>
+              <span class="slash">/</span>
+
+              <select name="select2" class="profileField" id="newProfile" style="width:70px;">
+                <option value="30">30</option>
+                <option value="35">35</option>
+                <option value="40">40</option>
+                <option value="45">45</option>
+                <option value="50">50</option>
+
+                <option value="55">55</option>
+                <option value="60">60</option>
+                <option value="65">65</option>
+                <option value="70" selected="selected">70</option>
+                <option value="75">75</option>
+                <option value="80">80</option>
+
+                <option value="85">85&nbsp;</option>
+              </select>
+              
+              <div style="margin-top:5px;">
+                  <span class="r">R</span>
+                  <select name="select2" class="radiusField" id="newDiameter" style="width:70px;">
+                    <option value="12">12</option>
+                    <option value="13" selected="selected">13</option>
+                    <option value="14">14</option>
+    
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22&nbsp;</option>
+                  </select>
+               </div>   
+                </td>
+          </tr>
+        </table>
+        <table class="resultsTable">
+          <tr class="header">
+            <td></td>
+            <td class="num">Старый</td>
+
+            <td class="num" style="color:#FF0000">Новый</td>
+            <td class="num" style="color:#5B854A">Разница</td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap" id="labelShemeL"><b>L</b>&nbsp;&mdash; Ширина шины, мм</td>
+            <td class="num" id="oldL"></td>
+
+            <td class="num" id="newL"></td>
+            <td class="num result" id="deltaL"></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap" id="labelShemeH"><b>H</b>&nbsp;&mdash; Высота профиля, мм</td>
+            <td class="num" id="oldH"></td>
+            <td class="num" id="newH"></td>
+
+            <td class="num result" id="deltaH"></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap" id="labelShemeD"><b>d</b>&nbsp;&mdash; Внутренний диаметр, мм</td>
+            <td class="num" id="oldD"></td>
+            <td class="num" id="newD"></td>
+            <td class="num result" id="deltaD"></td>
+
+          </tr>
+          <tr>
+            <td nowrap="nowrap" id="labelShemeDD"><b>D</b>&nbsp;&mdash; Внешний диаметр, мм</td>
+            <td class="num" id="oldDD"></td>
+            <td class="num" id="newDD"></td>
+            <td class="num result" id="deltaDD"></td>
+          </tr>
+
+        </table></td>
+      <td valign="top"><p>Данная программа – шинный калькулятор – является инструментом для правильной замены установленных на автомобиле покрышек. Если вы решили изменить размеры шины  данная программа поможет вам узнать, на сколько изменяются её внешние показатели, просчитать погрешность спидометра, следить за изменениями дорожного просвета. </p></td>
+    </tr>
+    <tr>
+      <td valign="bottom"><div class="sheme"> <img src="/calculator/sheme.gif" width="132" height="251" alt="sheme" />
+          <div class="shemeLegend" id="shemeLegend"> <img src="/calculator/sheme-dd.gif" width="132" height="251" alt="D" id="shemeDD" /> <img src="/calculator/sheme-d.gif" width="132" height="251" alt="d" id="shemeD" /> <img src="/calculator/sheme-l.gif" width="132" height="251" alt="L" id="shemeL" /> <img src="/calculator/sheme-h.gif" width="132" height="251" alt="H" id="shemeH" /> </div>
+
+        </div></td>
+    </tr>
+  </table>
+</div>

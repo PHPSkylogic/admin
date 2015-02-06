@@ -1,0 +1,9 @@
+2
+Ценообразование
+product_price
+product_price
+price_changelog,product,catalog
+1
+Позволяет выбранной группе товаров произвести математические вычисления над ценой
+
+13

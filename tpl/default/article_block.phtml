@@ -1,0 +1,36 @@
+<?php
+	if(isset($vars['article']))
+    {
+		$i=0;
+		echo'<div id="article_block">';
+		echo '<div class="title title_other">'.$vars['translate']['article'].'</div>';
+		foreach($vars['article'] as $row)
+		{
+			$style='';
+			if($i==3)
+			{
+				$style=' style="margin-right:0;"';
+				$i=-1;
+			}
+			echo'<div class="article_block"'.$style.'>';
+				
+				echo'<div class="date">'.Date::date_view($row['date'], "dd MM YY").'</div>
+					 <a href="'.LINK.'/article/'.$row['url'].'" class="article_title">'.$row['name'].'></a>
+					 <div class="article_body_m">'.$row['body_m'].'</div>';
+				
+				
+			echo"</div>";
+			$i++;
+		}
+		echo'<div class="clear"></div><a href="'.LINK.'/article/all" class="all_news">'.$vars['translate']['all_article'].' >></a></div>';
+    }
+	echo '<div id="subcriber">
+			<div class="title title_other">'.$vars['translate']['mailer2'].'</div>
+			<form id="subscribe_form">
+				<input type="text" name="subscribe-email" id="subscribe-email" placeholder="'.$vars['translate']['your_email'].'" value="" />
+			  	<input type="image" src="'.IMAGES.'enter.jpg" />
+			</form>
+		 	'.htmlspecialchars_decode($vars['info_blocks']['1']).'
+		  </div>';
+?>
+<div class="clear"></div>

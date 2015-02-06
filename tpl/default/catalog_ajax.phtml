@@ -1,0 +1,12 @@
+<?
+	echo '<div class="count_product2">Показано товаров: '.$vars['list']['count'].' </div>';
+	$i=0;
+    echo'<div>';
+	foreach($vars['list']['list'] as $row)
+	{
+		include "product.phtml";
+		$i++;
+	}
+    echo'</div>';
+	echo $vars['list']['paging'];
+?>

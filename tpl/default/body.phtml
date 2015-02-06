@@ -1,0 +1,6 @@
+<?
+    echo '<h1 class="title">'.$vars['body']['name'].'</h1>';
+    if(!isset($vars['form']))echo htmlspecialchars_decode($vars['body']['body']);
+	elseif($vars['body']['form']==1) echo $vars['form'];
+    else echo htmlspecialchars_decode($vars['body']['body']).$vars['form'];
+?>

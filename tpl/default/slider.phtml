@@ -1,0 +1,32 @@
+
+<script type="text/javascript" src="/js/jquery-1.5.min.js"></script>
+<script type="text/javascript" src="/js/jquery.waterwheelCarousel.js"></script>
+<script type="text/javascript">
+    $jqNew = jQuery.noConflict(true);
+    $jqNew(document).ready(function () {
+        $jqNew("#waterwheel-carousel-default").waterwheelCarousel();
+    });
+</script>
+
+<div id="waterwheel-carousel-default">
+    <div class="carousel-controls">
+        <div class="carousel-prev">
+            <a href="#"><img src="/images/prev.png" /></a></div>
+        <div class="carousel-next">
+            <a href="#"><img src="/images/next.png" /></a></div>
+    </div>
+    <div class="carousel-images">
+
+        <?
+            foreach($vars['slider'] as $row)
+            {
+                if($row['url']=='')$link='javascript:void(0);';
+                else $link=LINK.$row['url'];
+
+                echo'<a href="'.$link.'" title="'.$row['name'].'"><img src="/'.$row['photo'].'" alt="'.$row['name'].'" /></a>';
+            }
+        ?>
+    </div>
+</div>
+
+<div class="clear"></div>

@@ -1,0 +1,19 @@
+<div class="items-container multi-level">
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="table table-fixed hidden-inputs tb_sort">
+	<tr>
+		<th width="30">ID</th>
+		<th width="430">Значение</th>
+        <th width="430">Комментарий</th>
+	</tr>
+	<?php
+		foreach($vars['list'] as $row)
+		{
+            echo'<tr>
+                    <td><span>'.$row['id'].'</span><input type="hidden" value="'.$row['id'].'" name="save_id[]" /></td>
+                    <td><textarea name="value[]" class="input-textarea" style="resize: none; height:17px; width:400px;">'.$row['value'].'</textarea></td>
+                    <td><textarea name="comment[]" class="input-textarea" style="resize: none; height:17px; width:400px;">'.$row['comment'].'</textarea></td>
+                </tr>';
+		}
+	?>
+</table>
+</div>

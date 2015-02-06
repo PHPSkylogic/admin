@@ -1,0 +1,69 @@
+<script>
+    $(document).ready( function() {
+        $('#overlay').live('click', function() {
+            $(this).fadeOut('fast');
+            $('.pop-up').hide();
+        });
+
+        $('#tech-support-message').live('click', function(){
+            $('#support-text').val('').removeClass('input-error');
+            $('#support-subject').val('').removeClass('input-error');
+            $('#button-container').html('<input type="submit" value="Отправить" id="report-send" class="cm-save-and-close" />');
+            $('#overlay').fadeIn('fast');
+            $('#tech-support-box').show();
+            return false;
+        });
+
+        $('#report-send').live('click', function() {
+
+            var err = '';
+            var subject = $('#support-subject').val();
+            var text = $('#support-text').val();
+
+            $('#support-subject').removeClass('input-error');
+            $('#support-text').removeClass('input-error');
+
+            if(subject==''||subject.length<5||subject.length>100) {
+                err += 'err';
+                $('#support-subject').addClass('input-error');
+            }
+            if(text==''||text.length<5) {
+                err += 'err';
+                $('#support-text').addClass('input-error');
+            }
+
+            if(err == '')
+            $.ajax({
+                type: "POST",
+                url: "/admin/ajax/supportsend",
+                cache: false,
+                data: { SUBJECT: subject, TEXT: text },
+                success: function (text) {
+                    $('#testing').show();
+                    $('#button-container').html('<p class="done">Сообщение отправлено</p>');
+                    setTimeout(function() {
+                        $('#overlay').fadeOut('fast');
+                        $('.pop-up').fadeOut('fast');
+                    },2000)
+                }
+            });
+        });
+    });
+</script>
+<a href="#" id="tech-support-message"></a>
+<div id="tech-support-box" class="pop-up">
+    <fieldset>
+        <h3> Запрос в техподдержку </h3>
+        <div class="form-field">
+            <label class="cm-required" for="page">Тема:</label>
+            <input type="text" class="input-text-large main-input" value="" size="55" id="support-subject" />
+        </div>
+        <div class="form-field">
+            <label for="body_m">Сообщение:</label>
+            <textarea class="input-textarea-long" rows="5" cols="85" id="support-text" name="body_m"></textarea>
+        </div>
+    </fieldset>
+                  <span id="button-container" class="submit-button cm-button-main cm-save-and-close">
+                            <input type="submit" value="Отправить" id="report-send" class="cm-save-and-close" />
+                  </span>
+</div>

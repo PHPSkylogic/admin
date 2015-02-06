@@ -1,0 +1,37 @@
+<div class="left_menu" style="padding:18px;">
+	Ваш регион: <a href="#city_block" data-toggle="modal" class="link_city"><?=$_SESSION['price_type_name']?></a>
+</div>
+
+<div id="city_block" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Выберите город</h3>
+  </div>
+  <div class="modal-body">
+  	<form action="" method="post" id="city_form">
+        <input type="hidden" name="price_type_id" id="city_id" />
+    </form>
+  	<div class="city_list">
+		<?
+            $i=0;
+            $ul='';
+            $li='';
+			$cnt=(int)(count($vars['city'])/3);
+            foreach($vars['city'] as $row)
+            {
+                $li.='<li';if($_SESSION['price_type_id']==$row['id'])$li.=' class="selected"';$li.='><a href="'.$row['id'].'" class="change_city" rel="nofollow">'.$row['name'].'</a></li>';
+                if($i==$cnt)
+                {
+                    $ul.='<ul>'.$li.'</ul>';
+                    $li='';	
+                    $i=-1;
+                }
+                $i++;		
+            }
+            if($li!='')$ul.='<ul>'.$li.'</ul>';
+            echo $ul;
+        ?>
+     </div>       
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="/css/jquery-ui.css">
+<script src="/js/jquery-ui.js"></script>
+<?
+	if(isset($vars['filter'])&&$vars['filter']!='')
+	{
+		echo'<div id="left_menu2">
+				<noindex>
+				<form id="filters" method="post" onsubmit="return false;">
+					<div class="title">'.$vars['translate']['sort_params'].'</div>
+					<ul id="load_filter">
+						'.$vars['filter'].'
+						<div class="clear"></div>
+					</ul>
+				</form>
+				</noindex>
+			</div>';
+	}
+?>

@@ -1,0 +1,22 @@
+<?php
+   if(isset($vars['product'][0]))
+   {
+		foreach($vars['catalog'] as $row_c)
+		{
+			echo'<h2 class="title2" style="margin:10px 0 0 0;">'.$row_c['name'].'</h2>';
+			$i=0;
+			foreach($vars['product'] as $row)
+			{
+				if($row_c['id']==$row['catalog_id'])
+				{
+					$del_compare='<a href="/favorite/'.$vars['type'].'/del/'.$row['id'].'"><img src="/images/del.png" alt="" class="del_compare2" title="Удалить" /></a>';
+					include "product.phtml";
+					$i++;
+				}
+			}
+			echo'<div class="clear"></div>';
+	    }
+    }
+	else echo'<div class="message">В таблице пусто</div>';
+?>
+<div class="clear"></div>

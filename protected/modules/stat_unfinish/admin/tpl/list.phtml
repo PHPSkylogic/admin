@@ -1,0 +1,20 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<div class="cm-notification-container"></div>
+<div id="message"><?=$vars['message']?></div>
+<div>
+	<div class="clear mainbox-title-container">
+		<h1 class="mainbox-title float-left"><?=$vars['name']?></h1>
+	</div>
+	<div class="mainbox-body">
+		<div id="ds_15014" class="clear">
+            <a href="/admin/orders">Показать все</a> |
+            <a href="#" class="compareStat" dir="Убрать сравнение">Сравнить периоды</a>
+            <iframe class="" width="100%" height="430" style="border: none; " scrolling="no" src="/admin/ajax/stat_unfinish/compare/type/0"></iframe>
+
+
+
+            <iframe class="compareStat" width="100%" height="430" style="border: none; display: none;" scrolling="no" src="/admin/ajax/stat_unfinish/compare"></iframe>
+		</div>
+	</div>
+</div>
